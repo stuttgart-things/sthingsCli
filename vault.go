@@ -102,18 +102,24 @@ func CheckVaultKVExistenceInSecretPath(kvpath, token string) bool {
 	return true
 }
 
-func VerifyEnvVars(envVars []string) {
+func VerifyEnvVars(envVars []string) bool {
+
+	set := true
 
 	for _, v := range envVars {
 
 		_, ok := os.LookupEnv(v)
 
 		if !ok {
-			fmt.Println(v, "is not present..exiting")
-			os.Exit(3)
+			fmt.Println(v, "is not present..")
+			return false
+
+		} else {
+			fmt.Println(v, "is present")
 		}
 	}
 
+	return set
 }
 
 func CreateVaultClient() (*Client, error) {
