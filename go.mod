@@ -1,4 +1,4 @@
-module github/sthingsCli
+module github.com/stuttgart-things/sthingsCli
 
 go 1.20
 
