@@ -6,7 +6,7 @@ package cli
 
 import (
 	"reflect"
-
+	"strconv"
 	"github.com/jedib0t/go-pretty/v6/table"
 )
 
@@ -44,4 +44,8 @@ func CreateTableRows(s interface{}) table.Row {
 
 	}
 	return row
+}
+
+func GetUnderlyingAsValue(data interface{}) reflect.Value {
+	return reflect.ValueOf(data)
 }
