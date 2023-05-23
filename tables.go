@@ -21,3 +21,27 @@ func CreateTableHeader(s interface{}) table.Row {
 
 	return header
 }
+
+func CreateTableRows(s interface{}) table.Row {
+
+	gtype := reflect.TypeOf(s)
+	numFields := gtype.NumField()
+	rg := GetUnderlyingAsValue(s)
+	var row table.Row
+	for i := 0; i < numFields; i++ {
+
+		var value string
+		switch reflect.TypeOf(rg.Field(i).Interface()).String() {
+		case "string":
+			value = rg.Field(i).Interface().(string)
+			break
+		case "int":
+			value = strconv.Itoa(rg.Field(i).Interface().(int))
+			break
+
+		}
+		row = append(row, value)
+
+	}
+	return row
+}
