@@ -75,3 +75,20 @@ func RemoveValueFromRedis(redisClient *redis.Client, ctx context.Context, key st
 	}
 	return false
 }
+
+/*
+name: ConnectRedis
+description: connects to the Redis Client
+exampleUsage: |
+
+	redisClient := sthingsCli.CreateRedisClient("redis-pve.labul.sva.de:6379", <PASSWORD>)
+*/
+func CreateRedisClient(connectionString, redisPassword string) (client *redis.Client) {
+	client = redis.NewClient(&redis.Options{
+		Addr:     connectionString,
+		Password: redisPassword,
+		DB:       0,
+	})
+
+	return
+}
