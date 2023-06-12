@@ -300,3 +300,15 @@ func GetVaultConnectionInformation() map[string]string {
 	return vaultConnectionInformation
 
 }
+
+func VerifyVaultEnvVars() (string, bool) {
+
+	if VerifyEnvVars([]string{"VAULT_ADDR", "VAULT_ROLE_ID", "VAULT_SECRET_ID", "VAULT_NAMESPACE"}) {
+		return "approle", true
+	} else if VerifyEnvVars([]string{"VAULT_ADDR", "VAULT_TOKEN", "VAULT_NAMESPACE"}) {
+		return "token", true
+	} else {
+		return "missing", false
+	}
+
+}
