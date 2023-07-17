@@ -8,65 +8,42 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/go-redis/redis"
+	"github.com/redis/go-redis/v9"
 )
 
 var redisClient *redis.Client
 
-/*
-name: AddValueToRedisSet
-description: Function to add Value to a Key. If the key is non-existent it creates it as well.
-return: The return value is a boolean that determines if the value already exists or is unique. (True = unique)
-exampleUsage: |
-
-	uniqueVal := AddValueToRedisSet(RedisClient, context, "NameGenerator", "DarthVader") //key = "NameGenerator"  value = "DarthVader"
-*/
 func AddValueToRedisSet(redisClient *redis.Client, setKey, value string) (isSetValueunique bool) {
 
-	if redisClient.SAdd(setKey, value).Val() == 1 {
+	if redisClient.SAdd(context.TODO(), setKey, value).Val() == 1 {
 		isSetValueunique = true
 	}
 
 	return
 }
 
-/*
-name: GetRandomValueFromRedis
-description: Function that returns a random value from a specified key.
-exampleUsage: |
+func GetValuesFromRedisSet(redisClient *redis.Client, setKey string) (values []string) {
 
-	randomName := GetRandomValueFromRedis(RedisClient, context, "NameGenerator") // key = NameGenerator
-*/
+	values = redisClient.SMembers(context.TODO(), setKey).Val()
+
+	return
+}
+
 func GetRandomValueFromRedis(redisClient *redis.Client, ctx context.Context, key string) string {
-	ranVal := redisClient.SRandMember(key).Val()
+	ranVal := redisClient.SRandMember(context.TODO(), key).Val()
 	return ranVal
 }
 
-/*
-name: GetAllValuesFromRedis
-description: Function that returns all values from an existing key.
-exampleUsage: |
-
-	rangeValues := GetAllValuesFromRedis(RedisClient, context, "NameGenerator") // key = NameGenerator
-*/
 func GetAllValuesFromRedis(redisClient *redis.Client, ctx context.Context, key string) []string {
-	rvalues, err := redisClient.SMembers(key).Result()
+	rvalues, err := redisClient.SMembers(context.TODO(), key).Result()
 	if err != nil {
 		fmt.Println(err)
 	}
 	return rvalues
 }
 
-/*
-name: RemoveValueFromRedis
-description: Function that removes a single specific value within a key
-return: The return value is a boolean that determines if the value existed and got removed or did not exist. (True = existed)
-exampleUsage: |
-
-	removedValue := RemoveValueFromRedis(RedisClient, context, "NameGenerator", "DarthVader") // key = NameGenerator value="DarthVader"
-*/
 func RemoveValueFromRedis(redisClient *redis.Client, ctx context.Context, key string, member string) bool {
-	remVal, err := redisClient.SRem(key, member).Result()
+	remVal, err := redisClient.SRem(context.TODO(), key, member).Result()
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -76,13 +53,6 @@ func RemoveValueFromRedis(redisClient *redis.Client, ctx context.Context, key st
 	return false
 }
 
-/*
-name: ConnectRedis
-description: connects to the Redis Client
-exampleUsage: |
-
-	redisClient := sthingsCli.CreateRedisClient("redis-pve.labul.sva.de:6379", <PASSWORD>)
-*/
 func CreateRedisClient(connectionString, redisPassword string) (client *redis.Client) {
 	client = redis.NewClient(&redis.Options{
 		Addr:     connectionString,
