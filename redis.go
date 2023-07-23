@@ -124,6 +124,7 @@ func EnqueueDataInRedisStreams(connectionString, redisPassword, stream string, v
 
 	if redisStreamErr != nil {
 		panic(redisStreamErr)
+
 	} else {
 		enqueue = true
 	}
