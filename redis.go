@@ -62,3 +62,39 @@ func CreateRedisClient(connectionString, redisPassword string) (client *redis.Cl
 
 	return
 }
+
+func CheckRedisKV(connectionString, redisPassword, key, expectedValue string) (keyValueExists bool) {
+
+	rdb := CreateRedisClient(connectionString, redisPassword)
+
+	// CHECK IF KEY EXISTS IN REDIS
+	fmt.Println("CHECKING IF KEY " + key + " EXISTS..")
+	keyExists, err := rdb.Exists(context.TODO(), key).Result()
+	if err != nil {
+		panic(err)
+	}
+
+	// CHECK FOR VALUE/STATUS IN REDIS
+	if keyExists == 1 {
+
+		fmt.Println("KEY " + key + " EXISTS..CHECKING FOR IT'S VALUE")
+
+		value, err := rdb.Get(context.TODO(), key).Result()
+		if err != nil {
+			panic(err)
+		}
+
+		if value == expectedValue {
+			fmt.Println("STATUS", value)
+			keyValueExists = true
+		}
+
+		fmt.Println("STATUS", value)
+
+	} else {
+
+		fmt.Println("KEY " + key + " DOES NOT EXIST)")
+	}
+
+	return
+}
