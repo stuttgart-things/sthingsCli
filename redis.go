@@ -8,6 +8,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/stuttgart-things/redisqueue"
+
 	"github.com/redis/go-redis/v9"
 )
 
@@ -94,6 +96,36 @@ func CheckRedisKV(connectionString, redisPassword, key, expectedValue string) (k
 	} else {
 
 		fmt.Println("KEY " + key + " DOES NOT EXIST)")
+	}
+
+	return
+}
+
+func EnqueueDataInRedisStreams(connectionString, redisPassword, stream string, values map[string]interface{}) (enqueue bool) {
+
+	producer, err := redisqueue.NewProducerWithOptions(&redisqueue.ProducerOptions{
+		MaxLen:               10000,
+		ApproximateMaxLength: true,
+		RedisClient: redis.NewClient(&redis.Options{
+			Addr:     connectionString,
+			Password: redisPassword,
+			DB:       0,
+		}),
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	redisStreamErr := producer.Enqueue(&redisqueue.Message{
+		Stream: stream,
+		Values: values,
+	})
+
+	if redisStreamErr != nil {
+		panic(redisStreamErr)
+	} else {
+		enqueue = true
 	}
 
 	return
