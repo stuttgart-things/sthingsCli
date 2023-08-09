@@ -6,6 +6,8 @@ package cli
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 var (
@@ -14,5 +16,10 @@ var (
 
 func TestCloneGitRepository(t *testing.T) {
 
-	GitCloneRepository(repo, nil)
+	assert := assert.New(t)
+
+	_, cloned := CloneGitRepository(repo, nil)
+
+	assert.Equal(cloned, true)
+
 }
