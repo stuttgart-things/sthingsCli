@@ -17,7 +17,7 @@ import (
 	git "github.com/go-git/go-git/v5"
 )
 
-func CloneGitRepository(repository string, auth *http.BasicAuth) (fs billy.Filesystem, cloned bool) {
+func CloneGitRepository(repository, branchName string, auth *http.BasicAuth) (fs billy.Filesystem, cloned bool) {
 
 	// Init memory storage and fs
 	storer := memory.NewStorage()
@@ -28,7 +28,7 @@ func CloneGitRepository(repository string, auth *http.BasicAuth) (fs billy.Files
 		URL:           repository,
 		Auth:          auth,
 		RemoteName:    "origin",
-		ReferenceName: plumbing.ReferenceName("main"),
+		ReferenceName: plumbing.ReferenceName(branchName),
 	})
 
 	if err != nil {
@@ -56,4 +56,11 @@ func GetFileListFromGitRepository(directory string, fs billy.Filesystem) (fileLi
 
 	return
 
+}
+
+func CreateGitAuth(gitUser, gitToken string) *http.BasicAuth {
+	return &http.BasicAuth{
+		Username: gitUser,
+		Password: gitToken,
+	}
 }
