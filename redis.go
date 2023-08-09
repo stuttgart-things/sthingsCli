@@ -1,5 +1,5 @@
 /*
-Copyright © 2022 Patrick Hermann patrick.hermann@sva.de
+Copyright © 2023 Patrick Hermann patrick.hermann@sva.de
 */
 
 package cli
