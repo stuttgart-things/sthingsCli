@@ -6,6 +6,7 @@ package cli
 
 import (
 	"fmt"
+	"io"
 	"os"
 
 	billy "github.com/go-git/go-billy/v5"
@@ -17,6 +18,27 @@ import (
 
 	git "github.com/go-git/go-git/v5"
 )
+
+func ReadFileContentFromGitRepo(repo billy.Filesystem, filePath string) string {
+
+	// OPEN FILE
+	file, err := repo.Open(filePath)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	// READ FILE CONTENT
+	fileContent, err := io.ReadAll(file)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	// RETURN STRING
+	return string(fileContent)
+
+}
 
 func CloneGitRepository(repository, branchName, commitId string, auth *http.BasicAuth) (fs billy.Filesystem, cloned bool) {
 
