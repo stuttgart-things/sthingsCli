@@ -5,8 +5,9 @@ Copyright © 2023 Patrick Hermann patrick.hermann@sva.de
 package cli
 
 import (
-	"fmt"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 var config Profile
@@ -25,21 +26,29 @@ type Profile struct {
 	ScriptProfile []map[string]Script  `mapstructure:"script"`
 }
 
+var expectedUrl = "https://github.com/argoproj/argo-cd/releases/download/v2.5.10/argocd-linux-amd64"
+var expectedScript = "echo hello"
+
 var yamlExample = []byte(`
 binary:
   - argocd:
-      url: https://github.com/argoproj/argo-cd/releases/download/v{{ or .decksmanVersion "2.5.10" }}/argocd-linux-amd64
+      url: https://github.com/argoproj/argo-cd/releases/download/v2.5.10/argocd-linux-amd64
       bin: argocd-linux-amd64
-  - decksman:
-      url: https://artifacts.tiab.labda.sva.de/decksman/decksman-{{ or .decksmanVersion "0.8.436" }}.zip
-      bin: decksman
 script:
   - argocd:
       script: |
-        echo hello
-`)
+        echo hello`)
 
 func TestRReadInlineYamlToObject(t *testing.T) {
+
+	assert := assert.New(t)
+
 	config := ReadInlineYamlToObject(yamlExample, config).(Profile)
-	fmt.Println(config)
+
+	// CHECK FOR ONE VALUE IN BINARY
+	assert.Equal(expectedUrl, config.BinaryProfile[0]["argocd"].Url)
+
+	// CHECK FOR ONE VALUE IN SCRIPT
+	assert.Equal(expectedScript, config.ScriptProfile[0]["argocd"].Script)
+
 }
