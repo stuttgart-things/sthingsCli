@@ -5,8 +5,13 @@ Copyright © 2023 Patrick Hermann patrick.hermann@sva.de
 package cli
 
 import (
+	"io"
 	"log"
+	"net/http"
 	"os"
+	"path/filepath"
+
+	"github.com/schollz/progressbar/v3"
 
 	goteamsnotify "github.com/atc0005/go-teams-notify/v2"
 	"github.com/atc0005/go-teams-notify/v2/messagecard"
@@ -40,4 +45,23 @@ func SendWebhookToTeams(webhook MsTeamsWebhook) bool {
 	}
 
 	return true
+}
+
+func DownloadFileWithProgressBar(downloadUrl, targetDir string) {
+
+	req, _ := http.NewRequest("GET", downloadUrl, nil)
+	resp, _ := http.DefaultClient.Do(req)
+	defer resp.Body.Close()
+
+	fileName := filepath.Base(downloadUrl)
+
+	f, _ := os.OpenFile(targetDir+"/"+fileName, os.O_CREATE|os.O_WRONLY, 0644)
+	defer f.Close()
+
+	bar := progressbar.DefaultBytes(
+		resp.ContentLength,
+		"downloading "+fileName,
+	)
+	io.Copy(io.MultiWriter(f, bar), resp.Body)
+
 }
