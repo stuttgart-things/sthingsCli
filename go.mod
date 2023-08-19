@@ -9,6 +9,7 @@ require (
 	github.com/go-git/go-git/v5 v5.8.1
 	github.com/hashicorp/vault/api v1.9.0
 	github.com/jedib0t/go-pretty/v6 v6.4.6
+	github.com/nitishm/go-rejson/v4 v4.1.0
 	github.com/redis/go-redis/v9 v9.0.5
 	github.com/schollz/progressbar/v3 v3.13.1
 	github.com/spf13/viper v1.16.0
@@ -38,6 +39,7 @@ require (
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/git-chglog/git-chglog v0.15.4 // indirect
 	github.com/go-git/gcfg v1.5.1-0.20230307220236-3a3c6141e376 // indirect
+	github.com/go-redis/redis/v8 v8.4.4 // indirect
 	github.com/golang-jwt/jwt/v4 v4.4.2 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
@@ -88,6 +90,7 @@ require (
 	github.com/urfave/cli/v2 v2.24.3 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
 	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
+	go.opentelemetry.io/otel v0.15.0 // indirect
 	golang.org/x/crypto v0.11.0 // indirect
 	golang.org/x/mod v0.10.0 // indirect
 	golang.org/x/net v0.12.0 // indirect

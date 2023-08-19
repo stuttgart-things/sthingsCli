@@ -7,13 +7,31 @@ package cli
 import (
 	"context"
 	"fmt"
+	"log"
 
+	"github.com/nitishm/go-rejson/v4"
 	"github.com/stuttgart-things/redisqueue"
 
 	"github.com/redis/go-redis/v9"
 )
 
 var redisClient *redis.Client
+
+func SetObjectToRedisJSON(redisJSONHandler *rejson.Handler, jsonObject interface{}, jsonKey string) {
+
+	res, err := redisJSONHandler.JSONSet(jsonKey, ".", jsonObject)
+	if err != nil {
+		log.Fatalf("Failed to JSONSet")
+		return
+	}
+
+	if res.(string) == "OK" {
+		fmt.Printf("Success: %s\n", res)
+	} else {
+		fmt.Println("Failed to Set: ")
+	}
+
+}
 
 func AddValueToRedisSet(redisClient *redis.Client, setKey, value string) (isSetValueunique bool) {
 
