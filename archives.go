@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-func UnzipArchive(source, destination string) error {
+func UnZipArchive(source, destination string) error {
 
 	// 1. OPEN THE ZIP FILE
 	reader, err := zip.OpenReader(source)

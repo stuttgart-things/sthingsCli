@@ -22,7 +22,7 @@ func TestUnzipArchive(t *testing.T) {
 	assert := assert.New(t)
 
 	DownloadFileWithProgressBar(zipDownloadURL, downloadTarget)
-	UnzipArchive(downloadTarget+"/"+zipFileArchive, downloadTarget)
+	UnZipArchive(downloadTarget+"/"+zipFileArchive, downloadTarget)
 	unarchivedDirExist, _ := sthingsBase.VerifyIfFileOrDirExists(downloadTarget+"/"+zipFileUnArchived, "dir")
 
 	assert.Equal(unarchivedDirExist, true)
