@@ -1,4 +1,4 @@
-# sthingsCli
+# stuttgart-things/sthingsCli
 module providing golang functions/building blocks for the use in command line interfaces
 
 TASKFILE
