@@ -11,6 +11,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	sthingsBase "github.com/stuttgart-things/sthingsBase"
 )
 
 func UnZipArchive(source, destination string) error {
@@ -77,4 +79,18 @@ func unzipFile(f *zip.File, destination string) error {
 		return err
 	}
 	return nil
+}
+
+func ExtractTarGzArchive(archiveFilePath, extractionFilePath string, extractFileMode int) {
+
+	tarExtractArgs := []string{
+		"-zxvf",
+		archiveFilePath,
+		"-C",
+		extractionFilePath,
+	}
+
+	sthingsBase.CreateNestedDirectoryStructure(extractionFilePath, extractFileMode)
+	sthingsBase.GetExternalProcessOutputToVar("tar", tarExtractArgs)
+
 }
