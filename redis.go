@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"log"
 
+	redigo "github.com/gomodule/redigo/redis"
 	"github.com/nitishm/go-rejson/v4"
 	"github.com/stuttgart-things/redisqueue"
 
@@ -16,6 +17,18 @@ import (
 )
 
 var redisClient *redis.Client
+
+func GetRedisJSON(redisJSONHandler *rejson.Handler, jsonObject interface{}, jsonKey string) {
+
+	jsonObject, err := redigo.Bytes(redisJSONHandler.JSONGet(jsonKey, "."))
+	if err != nil {
+		log.Fatalf("Failed to JSONGet")
+		return
+	}
+
+	return
+
+}
 
 func SetObjectToRedisJSON(redisJSONHandler *rejson.Handler, jsonObject interface{}, jsonKey string) {
 
