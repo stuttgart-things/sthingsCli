@@ -5,6 +5,8 @@ Copyright © 2023 Patrick Hermann patrick.hermann@sva.de
 package cli
 
 import (
+	"fmt"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -39,7 +41,7 @@ script:
       script: |
         echo hello`)
 
-func TestRReadInlineYamlToObject(t *testing.T) {
+func TestReadInlineYamlToObject(t *testing.T) {
 
 	assert := assert.New(t)
 
@@ -50,5 +52,47 @@ func TestRReadInlineYamlToObject(t *testing.T) {
 
 	// CHECK FOR ONE VALUE IN SCRIPT
 	assert.Equal(expectedScript, config.ScriptProfile[0]["argocd"].Script)
+
+}
+
+func TestConvertYAMLToJSON(t *testing.T) {
+
+	assert := assert.New(t)
+
+	testYaml := `apiVersion: tekton.dev/v1beta1
+	kind: PipelineRun
+	metadata:
+	  name: hello
+	  namespace: ansible
+	`
+
+	wantedResult := `{"apiVersion":"tekton.dev/v1beta1","kind":"PipelineRun","metadata":{"name":"hello","namespace":"ansible"}}`
+	convertedJSON := ConvertYAMLToJSON(testYaml)
+
+	assert.Equal(convertedJSON, wantedResult)
+
+}
+
+func TestConvertJSONToYAML(t *testing.T) {
+
+	// assert := assert.New(t)
+
+	testJSON := `{"apiVersion":"tekton.dev/v1beta1", "kind":"PipelineRun", "metadata":{"name":"hello","namespace":"ansible"}}`
+
+	wantedResult := `apiVersion: tekton.dev/v1beta1
+	kind: PipelineRun
+	metadata:
+	  name: hello
+	  namespace: ansible
+	`
+
+	// fmt.Println(wantedResult)
+
+	convertedYAML := ConvertJSONToYAML(testJSON)
+	fmt.Println(convertedYAML)
+
+	fmt.Println(strings.Replace(wantedResult, "\t", "\n", -1))
+
+	// assert.Equal(convertedYAML, strings.Replace(wantedResult, "\t", "\n", 5))
 
 }

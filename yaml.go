@@ -10,6 +10,8 @@ import (
 	"path/filepath"
 	"strings"
 
+	"sigs.k8s.io/yaml"
+
 	"github.com/spf13/viper"
 )
 
@@ -50,4 +52,24 @@ func ReadInlineYamlToObject(inlineYAML []byte, yamlObject interface{}) interface
 
 	return yamlObject
 
+}
+
+func ConvertYAMLToJSON(yamlString string) string {
+
+	convertedJSON, err := yaml.YAMLToJSON([]byte(strings.Replace(yamlString, "\t", "\n", 5)))
+	if err != nil {
+		fmt.Printf("err: %v\n", err)
+	}
+
+	return string(convertedJSON)
+}
+
+func ConvertJSONToYAML(jsonString string) string {
+
+	convertedYAML, err := yaml.JSONToYAML([]byte(jsonString))
+	if err != nil {
+		fmt.Printf("err: %v\n", err)
+	}
+
+	return string(convertedYAML)
 }

@@ -16,6 +16,7 @@ require (
 	github.com/stretchr/testify v1.8.4
 	github.com/stuttgart-things/redisqueue v0.0.0-20230628084515-1d31f7874df7
 	github.com/stuttgart-things/sthingsBase v0.1.23
+	sigs.k8s.io/yaml v1.3.0
 )
 
 require (
