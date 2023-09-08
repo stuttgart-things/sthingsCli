@@ -18,7 +18,7 @@ import (
 
 var redisClient *redis.Client
 
-func GetRedisJSON(redisJSONHandler *rejson.Handler, jsonObject interface{}, jsonKey string) {
+func GetRedisJSON(redisJSONHandler *rejson.Handler, jsonKey string) (jsonObject interface{}) {
 
 	jsonObject, err := redigo.Bytes(redisJSONHandler.JSONGet(jsonKey, "."))
 	if err != nil {
