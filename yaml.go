@@ -66,6 +66,11 @@ func ConvertYAMLToJSON(yamlString string) string {
 
 func ConvertJSONToYAML(jsonString string) string {
 
+	// REMOVE ALL MAY EXISTING IVALID CHARS
+	jsonString = strings.ReplaceAll(jsonString, "\\", "")
+	jsonString = strings.TrimRight(jsonString, "\"")
+	jsonString = strings.TrimLeft(jsonString, "\"")
+
 	convertedYAML, err := yaml.JSONToYAML([]byte(jsonString))
 	if err != nil {
 		fmt.Printf("err: %v\n", err)

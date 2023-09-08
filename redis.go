@@ -21,6 +21,7 @@ var redisClient *redis.Client
 func GetRedisJSON(redisJSONHandler *rejson.Handler, jsonKey string) (jsonObject []byte) {
 
 	jsonObject, err := redigo.Bytes(redisJSONHandler.JSONGet(jsonKey, "."))
+
 	if err != nil {
 		log.Fatalf("Failed to JSONGet")
 		return
@@ -30,7 +31,7 @@ func GetRedisJSON(redisJSONHandler *rejson.Handler, jsonKey string) (jsonObject 
 
 }
 
-func SetObjectToRedisJSON(redisJSONHandler *rejson.Handler, jsonObject interface{}, jsonKey string) {
+func SetRedisJSON(redisJSONHandler *rejson.Handler, jsonObject interface{}, jsonKey string) {
 
 	res, err := redisJSONHandler.JSONSet(jsonKey, ".", jsonObject)
 	if err != nil {
