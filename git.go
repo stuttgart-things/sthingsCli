@@ -63,7 +63,6 @@ func CloneGitRepository(repository, branchName, commitId string, auth *http.Basi
 	}
 
 	// CHECK OUT SPECIFIC COMMIT BY ID (IF COMMIT IS GIVEN)
-
 	if commitId != "" {
 
 		ref, err := r.Head()
@@ -108,4 +107,61 @@ func CreateGitAuth(gitUser, gitToken string) *http.BasicAuth {
 		Username: gitUser,
 		Password: gitToken,
 	}
+}
+
+func AddCommitFileToGitRepository(repository string, auth *http.BasicAuth, fileContent []byte, filePath, commitMsg string) error {
+
+	// Init memory storage and fs
+	storer := memory.NewStorage()
+	fs := memfs.New()
+
+	// Clone repo into memfs
+	r, err := git.Clone(storer, fs, &git.CloneOptions{
+		URL:  repository,
+		Auth: auth,
+	})
+	if err != nil {
+		return fmt.Errorf("Could not git clone repository %s: %w", repository, err)
+	}
+	fmt.Println("Repository cloned")
+
+	// Get git default worktree
+	w, err := r.Worktree()
+	if err != nil {
+		return fmt.Errorf("Could not get git worktree: %w", err)
+	}
+
+	fmt.Println(w)
+
+	// Create new file
+	newFile, err := fs.Create(filePath)
+	if err != nil {
+		return fmt.Errorf("Could not create new file: %w", err)
+	}
+	newFile.Write(fileContent)
+	newFile.Close()
+
+	// Run git status before adding the file to the worktree
+	fmt.Println(w.Status())
+
+	// git add $filePath
+	w.Add(filePath)
+
+	// Run git status after the file has been added adding to the worktree
+	fmt.Println(w.Status())
+
+	// git commit -m $message
+	w.Commit(commitMsg, &git.CommitOptions{})
+
+	//Push the code to the remote
+	err = r.Push(&git.PushOptions{
+		RemoteName: "origin",
+		Auth:       auth,
+	})
+	if err != nil {
+		return fmt.Errorf("Could not git push: %w", err)
+	}
+	fmt.Println("Remote updated.", filePath)
+
+	return nil
 }
