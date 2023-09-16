@@ -109,7 +109,7 @@ func CreateGitAuth(gitUser, gitToken string) *http.BasicAuth {
 	}
 }
 
-func AddCommitFileToGitRepository(repository, branchName string, auth *http.BasicAuth, fileContent []byte, filePath, commitMsg string) error {
+func AddCommitFileToGitRepository(repository, branchName string, auth *http.BasicAuth, fileContent []byte, filePath, commitMsg string) (pushed bool) {
 
 	// INIT MEMORY STORAGE AND FS
 	storer := memory.NewStorage()
@@ -168,5 +168,7 @@ func AddCommitFileToGitRepository(repository, branchName string, auth *http.Basi
 	}
 	fmt.Println("Remote updated.", filePath)
 
-	return nil
+	pushed = true
+
+	return
 }
