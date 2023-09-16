@@ -109,57 +109,62 @@ func CreateGitAuth(gitUser, gitToken string) *http.BasicAuth {
 	}
 }
 
-func AddCommitFileToGitRepository(repository string, auth *http.BasicAuth, fileContent []byte, filePath, commitMsg string) error {
+func AddCommitFileToGitRepository(repository, branchName string, auth *http.BasicAuth, fileContent []byte, filePath, commitMsg string) error {
 
-	// Init memory storage and fs
+	// INIT MEMORY STORAGE AND FS
 	storer := memory.NewStorage()
 	fs := memfs.New()
 
-	// Clone repo into memfs
+	// CLONE REPO INTO MEMFS
 	r, err := git.Clone(storer, fs, &git.CloneOptions{
-		URL:  repository,
-		Auth: auth,
+		URL:           repository,
+		Auth:          auth,
+		RemoteName:    "origin",
+		Progress:      os.Stdout,
+		ReferenceName: plumbing.ReferenceName(branchName),
 	})
+
+	// CLONE REPO INTO MEMFS
 	if err != nil {
-		return fmt.Errorf("Could not git clone repository %s: %w", repository, err)
+		fmt.Println("Could not git clone repository")
 	}
 	fmt.Println("Repository cloned")
 
-	// Get git default worktree
+	// GET GIT DEFAULT WORKTREE
 	w, err := r.Worktree()
 	if err != nil {
-		return fmt.Errorf("Could not get git worktree: %w", err)
+		fmt.Println("Could not get git worktree")
 	}
 
 	fmt.Println(w)
 
-	// Create new file
+	// CREATE NEW FILE
 	newFile, err := fs.Create(filePath)
 	if err != nil {
-		return fmt.Errorf("Could not create new file: %w", err)
+		fmt.Println("Could not create new file")
 	}
 	newFile.Write(fileContent)
 	newFile.Close()
 
-	// Run git status before adding the file to the worktree
+	// RUN GIT STATUS BEFORE ADDING THE FILE TO THE WORKTREE
 	fmt.Println(w.Status())
 
-	// git add $filePath
+	// GIT ADD $FILEPATH
 	w.Add(filePath)
 
-	// Run git status after the file has been added adding to the worktree
+	// RUN GIT STATUS AFTER THE FILE HAS BEEN ADDED ADDING TO THE WORKTREE
 	fmt.Println(w.Status())
 
-	// git commit -m $message
+	// GIT COMMIT -M $MESSAGE
 	w.Commit(commitMsg, &git.CommitOptions{})
 
-	//Push the code to the remote
+	// PUSH THE CODE TO THE REMOTE
 	err = r.Push(&git.PushOptions{
 		RemoteName: "origin",
 		Auth:       auth,
 	})
 	if err != nil {
-		return fmt.Errorf("Could not git push: %w", err)
+		fmt.Println("Could not git push: %w", err)
 	}
 	fmt.Println("Remote updated.", filePath)
 

@@ -6,6 +6,7 @@ package cli
 
 import (
 	"fmt"
+	"os"
 	"reflect"
 	"testing"
 
@@ -18,6 +19,9 @@ var (
 	commitID              = "1ce75f510bff3b95b0a5998ee22731ec058c3267"
 	expectedFileList      = []string{".gitignore", "LICENSE", "README.md"}
 	expectedDirectoryList = []string{}
+	testCommitData        = []byte("ABC")
+	gitToken              = os.Getenv("GITHUB_TOKEN")
+	gitUser               = "patrick-hermann-sva"
 )
 
 func TestCloneGitRepository(t *testing.T) {
@@ -47,5 +51,12 @@ func TestGetFileListFromGitRepository(t *testing.T) {
 	} else {
 		fmt.Println("test successfully")
 	}
+
+}
+
+func TestAddCommitFileToGitRepository(t *testing.T) {
+
+	//auth := CreateGitAuth(gitUser, gitToken)
+	//AddCommitFileToGitRepository(repo, branchName, auth, testCommitData, "test.txt", "added test file w/ golang")
 
 }
