@@ -65,3 +65,10 @@ func DownloadFileWithProgressBar(downloadUrl, targetDir string) {
 	io.Copy(io.MultiWriter(f, bar), resp.Body)
 
 }
+
+func CheckUrlAvailability(webURL string) bool {
+
+	r, e := http.Head(webURL)
+	return e == nil && r.StatusCode == 200
+
+}
