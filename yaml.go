@@ -11,6 +11,8 @@ import (
 	"path/filepath"
 	"strings"
 
+	yamlv3 "gopkg.in/yaml.v3"
+
 	"sigs.k8s.io/yaml"
 
 	"github.com/spf13/viper"
@@ -21,7 +23,7 @@ func ReadYamlKeyValuesFromFile(yamlFileContent []byte) (yamlStructure map[string
 	yamlStructure = make(map[string]interface{})
 	data := make(map[interface{}]interface{})
 
-	err := yaml.Unmarshal(yamlFileContent, &data)
+	err := yamlv3.Unmarshal(yamlFileContent, &data)
 	if err != nil {
 		log.Fatal(err)
 	}
