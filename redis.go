@@ -22,9 +22,11 @@ func GetRedisJSON(redisJSONHandler *rejson.Handler, jsonKey string) (jsonObject 
 
 	jsonObject, err := redigo.Bytes(redisJSONHandler.JSONGet(jsonKey, "."))
 
+	fmt.Println(err)
+
 	if err != nil {
-		log.Fatalf("Failed to JSONGet")
 		fmt.Println(err)
+		log.Fatalf("Failed to JSONGet")
 		return
 	}
 
