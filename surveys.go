@@ -110,7 +110,7 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 			values := []string{"value"}
 
 			if strings.Contains(globalValues[defaultValues].(string), "|") {
-				values = strings.Split(defaultValues, "|")
+				values = strings.Split(globalValues[defaultValues].(string), "|")
 			}
 
 			return AskSingleSelectQuestion("Select "+values[0]+":", strings.Split(values[1], ";"))
