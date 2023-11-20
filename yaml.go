@@ -18,6 +18,20 @@ import (
 	"github.com/spf13/viper"
 )
 
+func GetYamlStringKey(key, pathToConfig, extension string) string {
+
+	// READ YAML
+	viper.SetConfigName(strings.ReplaceAll(filepath.Base(pathToConfig), extension, ""))
+	viper.AddConfigPath(filepath.Dir(pathToConfig))
+
+	err := viper.ReadInConfig()
+	if err != nil {
+		panic(err)
+	}
+
+	return viper.GetString(key)
+}
+
 func ReadYamlKeyValuesFromFile(yamlFileContent []byte) (yamlStructure map[string]interface{}) {
 
 	yamlStructure = make(map[string]interface{})
