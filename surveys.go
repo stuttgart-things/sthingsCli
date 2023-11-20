@@ -93,27 +93,35 @@ func AskMultiSelectQuestion(questionText string, options []string) []string {
 	return selectedAnswers
 }
 
-func RenderTemplateSurvey(templateContent string, globalValues map[string]interface{}) string {
+func RenderTemplateSurvey(templateContent string, globalValues map[string]interface{}) (string, map[string]interface{}) {
 	var buf bytes.Buffer
 
 	survey := RenderSurvey{
-		SingleInputSurvey: func(defaultValue string) string {
+		SingleInputSurvey: func(defaultValue string) (answer string) {
 			values := []string{"value"}
 
-			if strings.Contains(defaultValue, "") {
-				values = strings.Split(defaultValue, "|")
+			if strings.Contains(globalValues[defaultValue].(string), "|") {
+				values = strings.Split(globalValues[defaultValue].(string), "|")
 			}
 
-			return AskSingleInputQuestion("Enter "+values[0]+":", values[1])
+			answer = AskSingleInputQuestion("Enter "+values[0]+":", values[1])
+
+			globalValues[globalValues[defaultValue].(string)] = answer
+
+			return
 		},
-		SingleSelectSurvey: func(defaultValues string) string {
+		SingleSelectSurvey: func(defaultValues string) (answer string) {
 			values := []string{"value"}
 
 			if strings.Contains(globalValues[defaultValues].(string), "|") {
 				values = strings.Split(globalValues[defaultValues].(string), "|")
 			}
 
-			return AskSingleSelectQuestion("Select "+values[0]+":", strings.Split(values[1], ";"))
+			answer = AskSingleSelectQuestion("Select "+values[0]+":", strings.Split(values[1], ";"))
+
+			globalValues[globalValues[defaultValues].(string)] = answer
+
+			return
 		},
 	}
 
@@ -128,6 +136,6 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 		log.Fatalf("execution: %s", err)
 	}
 
-	return buf.String()
+	return buf.String(), globalValues
 
 }
