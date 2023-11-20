@@ -97,18 +97,16 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 	var buf bytes.Buffer
 
 	survey := RenderSurvey{
-		SingleInputSurvey: func(defaultValue string) (answer string) {
-			values := []string{"value"}
+		SingleInputSurvey: func(defaultKey string) (answer string) {
+			values := []string{defaultKey, "no default value"}
 
-			if strings.Contains(globalValues[defaultValue].(string), "|") {
-				values = strings.Split(globalValues[defaultValue].(string), "|")
-			} else {
-				values = []string{"defaultValue"}
+			if globalValues[defaultKey] != nil && strings.Contains(globalValues[defaultKey].(string), "|") {
+				values = strings.Split(globalValues[defaultKey].(string), "|")
 			}
 
 			answer = AskSingleInputQuestion("Enter "+values[0]+":", values[1])
 
-			globalValues[globalValues[defaultValue].(string)] = answer
+			globalValues[globalValues[defaultKey].(string)] = answer
 
 			return
 		},
