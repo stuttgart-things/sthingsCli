@@ -106,7 +106,7 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 
 			answer = AskSingleInputQuestion("Enter "+values[0]+":", values[1])
 
-			globalValues[globalValues[defaultKey].(string)] = answer
+			globalValues[values[0]] = answer
 
 			return
 		},
