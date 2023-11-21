@@ -96,6 +96,8 @@ func AskMultiSelectQuestion(questionText string, options []string) []string {
 func RenderTemplateSurvey(templateContent string, globalValues map[string]interface{}) (string, map[string]interface{}) {
 	var buf bytes.Buffer
 
+	fmt.Println("GLOBALS", globalValues)
+
 	survey := RenderSurvey{
 		SingleInputSurvey: func(defaultKey string) (answer string) {
 			values := []string{defaultKey, "no default value"}
