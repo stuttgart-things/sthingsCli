@@ -13,9 +13,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/allegro/bigcache/v3"
-
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/allegro/bigcache/v3"
+	sthingsBase "github.com/stuttgart-things/sthingsBase"
 )
 
 type RenderSurvey struct {
@@ -106,9 +106,14 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 	survey := RenderSurvey{
 		SingleInputSurvey: func(defaultKey string) (answer string) {
 			values := []string{defaultKey, "-"}
+			cacheKey := defaultKey
 
-			// GET CACHED ENTRY
-			cachedEntry, _ := cache.Get(defaultKey)
+			// CHECK IF A VAR IS DEFINED FOR CACHED VALUE
+			if strings.Contains(defaultKey, "var:") {
+				cacheKey, _ = sthingsBase.GetRegexSubMatch(defaultKey, `var: "(.*?)"`)
+			}
+
+			cachedEntry, _ := cache.Get(cacheKey)
 			if len(cachedEntry) != 0 {
 				values[1] = string(cachedEntry)
 			}
