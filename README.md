@@ -1,8 +1,8 @@
 # stuttgart-things/sthingsCli
-module providing golang functions/building blocks for the use in command line interfaces
 
-TASKFILE
--------
+providing golang building blocks for the use in command line interface modules
+
+## TASKFILE
 
 ```bash
 task: Available tasks for this project:
