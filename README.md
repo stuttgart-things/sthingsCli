@@ -3,7 +3,13 @@ module providing golang functions/building blocks for the use in command line in
 
 TASKFILE
 -------
-* TAG
+
+```bash
+task: Available tasks for this project:
+* lint:       Lint code
+* tag:        commit, push & tag the module
+* test:       Test code
+```
 
 ## LICENSE
 
