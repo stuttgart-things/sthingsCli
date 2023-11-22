@@ -121,15 +121,19 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 					values[1] = "PLEASE ENTER"
 				}
 
-				// GET KEY FROM CACHE | SET DEFAULTS
-				cachedEntry, _ := cache.Get(cacheKey)
-				if len(cachedEntry) != 0 {
-					values[1] = string(cachedEntry)
-					fmt.Println("CACHED ENTRY:", string(cachedEntry))
-				} else if values[1] == "" {
-					values[1] = "PLEASE OVERWRITE"
-				}
+				if globalValues[cacheKey] != nil {
+					values[1] = globalValues[cacheKey].(string)
+				} else {
+					// GET KEY FROM CACHE | SET DEFAULTS
+					cachedEntry, _ := cache.Get(cacheKey)
 
+					if len(cachedEntry) != 0 {
+						values[1] = string(cachedEntry)
+						fmt.Println("CACHED ENTRY:", string(cachedEntry))
+					} else if values[1] == "" {
+						values[1] = "PLEASE OVERWRITE"
+					}
+				}
 			}
 
 			// ASK QUESTION
