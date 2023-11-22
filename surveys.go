@@ -118,9 +118,10 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 				if strings.Contains(values[1], "+") {
 					valuesVar := strings.Split(globalValues[defaultKey].(string), "+")
 					cacheKey = valuesVar[1]
+					values[1] = valuesVar[0]
 				}
 
-				// GET KEY FROM CACHE
+				// GET KEY FROM CACHE | SET DEFAULTS
 				cachedEntry, _ := cache.Get(cacheKey)
 				if len(cachedEntry) != 0 {
 					values[1] = string(cachedEntry)
