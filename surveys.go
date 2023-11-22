@@ -112,29 +112,29 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 			// cacheKey, _ = sthingsBase.GetRegexSubMatch(defaultKey, `var+"(.*?)"`)
 			// fmt.Println("CACHEKEY", cacheKey)
 
-			if strings.Contains(defaultKey, "+") {
-				fmt.Println("A VAR IS DEFINED")
-				variable := strings.Split(defaultKey, "+")
-				cacheKey = variable[1]
-			}
+			// if strings.Contains(defaultKey, "+") {
+			// 	fmt.Println("A VAR IS DEFINED")
+			// 	variable := strings.Split(defaultKey, "+")
+			// 	cacheKey = variable[1]
+			// }
 
 			fmt.Println("CACHE KEY IS", cacheKey)
-
-			cachedEntry, _ := cache.Get(cacheKey)
-			if len(cachedEntry) != 0 {
-				values[1] = string(cachedEntry)
-				fmt.Println("CACHED ENTRY", string(cachedEntry))
-			}
 
 			if globalValues[defaultKey] != nil && strings.Contains(globalValues[defaultKey].(string), "|") {
 				values = strings.Split(globalValues[defaultKey].(string), "|")
 
 				if strings.Contains(values[1], "+") {
 					valuesVar := strings.Split(globalValues[defaultKey].(string), "+")
-					values[1] = valuesVar[1]
+					cacheKey = valuesVar[1]
 				}
 
-				fmt.Println("KEEEYYY", values[1])
+				fmt.Println("KEEEYYY", cacheKey)
+
+				cachedEntry, _ := cache.Get(cacheKey)
+				if len(cachedEntry) != 0 {
+					values[1] = string(cachedEntry)
+					fmt.Println("CACHED ENTRY", string(cachedEntry))
+				}
 
 			}
 
