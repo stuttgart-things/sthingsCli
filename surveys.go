@@ -128,6 +128,14 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 
 			if globalValues[defaultKey] != nil && strings.Contains(globalValues[defaultKey].(string), "|") {
 				values = strings.Split(globalValues[defaultKey].(string), "|")
+
+				if strings.Contains(values[1], "+") {
+					valuesVar := strings.Split(globalValues[defaultKey].(string), "+")
+					values[1] = valuesVar[1]
+				}
+
+				fmt.Println("KEEEYYY", values[1])
+
 			}
 
 			answer = AskSingleInputQuestion("Enter "+values[0]+":", values[1])
