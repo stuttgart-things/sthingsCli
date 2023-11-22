@@ -125,7 +125,7 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 				if len(cachedEntry) != 0 {
 					values[1] = string(cachedEntry)
 					fmt.Println("CACHED ENTRY:", string(cachedEntry))
-				} else {
+				} else if values[1] == "" {
 					values[1] = "PLEASE OVERWRITE"
 				}
 
