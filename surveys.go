@@ -117,14 +117,10 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 					cacheKey = valuesVar[1]
 				}
 
-				fmt.Println("CACHED KEY:", cacheKey)
-
 				cachedEntry, _ := cache.Get(cacheKey)
 				if len(cachedEntry) != 0 {
 					values[1] = string(cachedEntry)
 					fmt.Println("CACHED ENTRY:", string(cachedEntry))
-				} else {
-					values[1] = "YOU NEED TO ENTER STH HERE PLEASE"
 				}
 
 			}
