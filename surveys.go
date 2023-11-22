@@ -121,7 +121,7 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 					values[1] = "PLEASE ENTER"
 				}
 
-				if globalValues[cacheKey] != nil {
+				if globalValues[cacheKey] != nil && globalValues[cacheKey] != globalValues[defaultKey] {
 					values[1] = globalValues[cacheKey].(string)
 				} else {
 					// GET KEY FROM CACHE | SET DEFAULTS
