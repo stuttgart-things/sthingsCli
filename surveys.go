@@ -142,6 +142,7 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 
 			// SET VALUE TO CACHE
 			cache.Set(values[0], []byte(answer))
+			cache.Set(cacheKey, []byte(answer))
 
 			return
 		},
