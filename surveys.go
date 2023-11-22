@@ -139,6 +139,9 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 			cache.Set(values[0], []byte(answer))
 			cache.Set(cacheKey, []byte(answer))
 
+			globalValues[values[0]] = answer
+			globalValues[cacheKey] = answer
+
 			return
 		},
 		SingleSelectSurvey: func(defaultValues string) (answer string) {
