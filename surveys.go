@@ -15,7 +15,6 @@ import (
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/allegro/bigcache/v3"
-	sthingsBase "github.com/stuttgart-things/sthingsBase"
 )
 
 type RenderSurvey struct {
@@ -110,15 +109,16 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 
 			fmt.Println("DEFAULT KEY", defaultKey)
 
-			cacheKey, _ = sthingsBase.GetRegexSubMatch(defaultKey, `var+"(.*?)"`)
-			fmt.Println("CACHEKEY", cacheKey)
+			// cacheKey, _ = sthingsBase.GetRegexSubMatch(defaultKey, `var+"(.*?)"`)
+			// fmt.Println("CACHEKEY", cacheKey)
 
-			// CHECK IF A VAR IS DEFINED FOR CACHED VALUE
-			// if strings.Contains(defaultKey, "var:") {
-			// 	fmt.Println("A VAR IS DEFINED")
-			// 	cacheKey, _ = sthingsBase.GetRegexSubMatch(defaultKey, `var: "(.*?)"`)
-			// 	fmt.Println("CACHEKEY", cacheKey)
-			// }
+			if strings.Contains(defaultKey, "+") {
+				fmt.Println("A VAR IS DEFINED")
+				variable := strings.Split(defaultKey, "+")
+				cacheKey = variable[1]
+			}
+
+			fmt.Println("CACHE KEY IS", cacheKey)
 
 			cachedEntry, _ := cache.Get(cacheKey)
 			if len(cachedEntry) != 0 {
