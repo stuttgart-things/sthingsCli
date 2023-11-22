@@ -123,6 +123,8 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 				if len(cachedEntry) != 0 {
 					values[1] = string(cachedEntry)
 					fmt.Println("CACHED ENTRY:", string(cachedEntry))
+				} else {
+					values[1] = "YOU NEED TO ENTER STH HERE PLEASE"
 				}
 
 			}
