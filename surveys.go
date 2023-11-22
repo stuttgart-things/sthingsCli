@@ -104,6 +104,8 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 
 	survey := RenderSurvey{
 		SingleInputSurvey: func(defaultKey string) (answer string) {
+
+			// SET DEFAULT VALUES
 			values := []string{defaultKey, "-"}
 			cacheKey := defaultKey
 
@@ -112,11 +114,13 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 			if globalValues[defaultKey] != nil && strings.Contains(globalValues[defaultKey].(string), "|") {
 				values = strings.Split(globalValues[defaultKey].(string), "|")
 
+				// GET REUSABLE VARIABLES AND SET CACHE KEY
 				if strings.Contains(values[1], "+") {
 					valuesVar := strings.Split(globalValues[defaultKey].(string), "+")
 					cacheKey = valuesVar[1]
 				}
 
+				// GET KEY FROM CACHE
 				cachedEntry, _ := cache.Get(cacheKey)
 				if len(cachedEntry) != 0 {
 					values[1] = string(cachedEntry)
@@ -125,6 +129,7 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 
 			}
 
+			// ASK QUESTION
 			answer = AskSingleInputQuestion("Enter "+values[0]+":", values[1])
 
 			// SET VALUE TO CACHE
