@@ -108,7 +108,9 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 			values := []string{defaultKey, "-"}
 			cacheKey := defaultKey
 
-			cacheKey, _ = sthingsBase.GetRegexSubMatch(defaultKey, `var:"(.*?)"`)
+			fmt.Println("DEFAULT KEY", defaultKey)
+
+			cacheKey, _ = sthingsBase.GetRegexSubMatch(defaultKey, `var: "(.*?)"`)
 			fmt.Println("CACHEKEY", cacheKey)
 
 			// CHECK IF A VAR IS DEFINED FOR CACHED VALUE
