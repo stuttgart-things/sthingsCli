@@ -155,7 +155,12 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 				values = strings.Split(globalValues[defaultValues].(string), "|")
 			}
 
-			answer = AskSingleSelectQuestion("Select "+values[0]+":", strings.Split(values[1], ";"))
+			for {
+				answer = AskSingleSelectQuestion("Select "+values[0]+":", strings.Split(values[1], ";"))
+				if !strings.Contains(answer, "PLEASE ENTER") {
+					break
+				}
+			}
 
 			globalValues[globalValues[defaultValues].(string)] = answer
 
