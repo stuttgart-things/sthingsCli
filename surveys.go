@@ -139,6 +139,13 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 			// ASK QUESTION
 			answer = AskSingleInputQuestion("Enter "+values[0]+":", values[1])
 
+			for {
+				answer = AskSingleInputQuestion("Enter "+values[0]+":", values[1])
+				if !strings.Contains(answer, "PLEASE ENTER") {
+					break
+				}
+			}
+
 			// SET VALUE TO CACHE
 			cache.Set(values[0], []byte(answer))
 			cache.Set(cacheKey, []byte(answer))
@@ -155,12 +162,7 @@ func RenderTemplateSurvey(templateContent string, globalValues map[string]interf
 				values = strings.Split(globalValues[defaultValues].(string), "|")
 			}
 
-			for {
-				answer = AskSingleSelectQuestion("Select "+values[0]+":", strings.Split(values[1], ";"))
-				if !strings.Contains(answer, "PLEASE ENTER") {
-					break
-				}
-			}
+			answer = AskSingleSelectQuestion("Select "+values[0]+":", strings.Split(values[1], ";"))
 
 			globalValues[globalValues[defaultValues].(string)] = answer
 
