@@ -7,6 +7,7 @@ package cli
 import (
 	"reflect"
 	"strconv"
+
 	"github.com/jedib0t/go-pretty/v6/table"
 )
 
@@ -38,7 +39,9 @@ func CreateTableRows(s interface{}) table.Row {
 		case "int":
 			value = strconv.Itoa(rg.Field(i).Interface().(int))
 			break
-
+		case "bool":
+			value = strconv.FormatBool(rg.Field(i).Interface().(bool))
+			break
 		}
 		row = append(row, value)
 
