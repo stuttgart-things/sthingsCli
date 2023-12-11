@@ -48,6 +48,18 @@ func SetRedisJSON(redisJSONHandler *rejson.Handler, jsonObject interface{}, json
 
 }
 
+func DeleteRedisSet(redisClient *redis.Client, setKey string) (isSetDeleted bool) {
+
+	err := redisClient.Del(context.TODO(), setKey).Err()
+	if err != nil {
+		panic(err)
+	} else {
+		isSetDeleted = true
+	}
+
+	return
+}
+
 func AddValueToRedisSet(redisClient *redis.Client, setKey, value string) (isSetValueunique bool) {
 
 	if redisClient.SAdd(context.TODO(), setKey, value).Val() == 1 {
