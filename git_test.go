@@ -54,9 +54,21 @@ func TestGetFileListFromGitRepository(t *testing.T) {
 
 }
 
-func TestAddCommitFileToGitRepository(t *testing.T) {
+func TestReadFileContentFromGitRepo(t *testing.T) {
 
-	//auth := CreateGitAuth(gitUser, gitToken)
-	//AddCommitFileToGitRepository(repo, branchName, auth, testCommitData, "test.txt", "added test file w/ golang")
+	gitRepository := "https://github.com/stuttgart-things/kaeffken.git"
+	gitBranch := "main"
+	gitCommitID := "09de9ff7b5c76aff8bb32f68cfb0bbe49cd5a7a8"
+
+	assert := assert.New(t)
+	expectedReadMe := "# kaeffken\ngitops cluster management cli \n"
+
+	repo, _ := CloneGitRepository(gitRepository, gitBranch, gitCommitID, nil)
+	readMe := ReadFileContentFromGitRepo(repo, "README.md")
+	fmt.Println(readMe)
+	fmt.Println(expectedReadMe)
+
+	assert.Equal(readMe, expectedReadMe)
+	fmt.Println("TEST SUCCESSFULLY")
 
 }
