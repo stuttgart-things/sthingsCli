@@ -17,6 +17,7 @@ import (
 )
 
 var redisClient *redis.Client
+var ctx = context.Background()
 
 func GetRedisJSON(redisJSONHandler *rejson.Handler, jsonKey string) (jsonObject []byte) {
 
@@ -72,6 +73,16 @@ func AddValueToRedisSet(redisClient *redis.Client, setKey, value string) (isSetV
 func GetValuesFromRedisSet(redisClient *redis.Client, setKey string) (values []string) {
 
 	values = redisClient.SMembers(context.TODO(), setKey).Val()
+
+	return
+}
+
+func GetValueFromRedisByKey(redisClient *redis.Client, key string) (value string) {
+
+	value, err := redisClient.Get(ctx, key).Result()
+	if err != nil {
+		panic(err)
+	}
 
 	return
 }
