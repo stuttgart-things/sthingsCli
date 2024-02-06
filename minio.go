@@ -112,3 +112,27 @@ func UploadObjectToMinioBucket(minioClient *minio.Client, bucket, sourcePath, ob
 
 	return true, info.Size
 }
+
+func CreateMinioBucket(minioClient *minio.Client, bucket, location string) bool {
+
+	ctx := context.Background()
+
+	err := minioClient.MakeBucket(ctx, bucket, minio.MakeBucketOptions{Region: location})
+	if err != nil {
+
+		// CHECK TO SEE IF WE ALREADY OWN THIS BUCKET (WHICH HAPPENS IF YOU RUN THIS TWICE)
+		exists, errBucketExists := minioClient.BucketExists(ctx, bucket)
+
+		if errBucketExists == nil && exists {
+			log.Printf("WE ALREADY OWN %s\n", bucket)
+		} else {
+			log.Fatalln(err)
+			return false
+		}
+
+	} else {
+		log.Printf("SUCCESSFULLY CREATED %s\n", bucket)
+	}
+
+	return true
+}
