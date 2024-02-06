@@ -124,14 +124,14 @@ func CreateMinioBucket(minioClient *minio.Client, bucket, location string) bool 
 		exists, errBucketExists := minioClient.BucketExists(ctx, bucket)
 
 		if errBucketExists == nil && exists {
-			log.Printf("WE ALREADY OWN %s\n", bucket)
+			log.Printf("BUCKET EXISTS ALREADY: %s\n", bucket)
 		} else {
 			log.Fatalln(err)
 			return false
 		}
 
 	} else {
-		log.Printf("SUCCESSFULLY CREATED %s\n", bucket)
+		log.Printf("SUCCESSFULLY CREATED: %s\n", bucket)
 	}
 
 	return true
