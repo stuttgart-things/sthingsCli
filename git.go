@@ -5,9 +5,12 @@ Copyright © 2023 Patrick Hermann patrick.hermann@sva.de
 package cli
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"os"
+
+	sthingsBase "github.com/stuttgart-things/sthingsBase"
 
 	billy "github.com/go-git/go-billy/v5"
 	plumbing "github.com/go-git/go-git/v5/plumbing"
@@ -15,9 +18,51 @@ import (
 
 	memfs "github.com/go-git/go-billy/v5/memfs"
 	memory "github.com/go-git/go-git/v5/storage/memory"
+	"github.com/google/go-github/github"
 
 	git "github.com/go-git/go-git/v5"
 )
+
+func GetCommitInformationFromGithubRepo(userName, repoName, branchName, option string) (getCommits bool, allCommits []map[string]interface{}, err error) {
+
+	client := github.NewClient(nil)
+
+	opt := &github.CommitsListOptions{
+		SHA: branchName,
+	}
+
+	commits, response, err := client.Repositories.ListCommits(context.Background(), userName, repoName, opt)
+
+	if err != nil && response.StatusCode != 200 {
+		fmt.Println(err)
+		return
+	} else {
+		getCommits = true
+	}
+
+	if option == "latest" {
+
+		commitInformation := make(map[string]interface{})
+		commitInformation["REVISION"] = sthingsBase.GetStringPointerValue(commits[0].SHA)
+		commitInformation["AUTHOR"] = sthingsBase.GetStringPointerValue(commits[0].Author.Login)
+
+		allCommits = append(allCommits, commitInformation)
+
+	} else {
+
+		for _, commit := range commits {
+			commitInformation := make(map[string]interface{})
+
+			commitInformation["REVISION"] = sthingsBase.GetStringPointerValue(commit.SHA)
+			commitInformation["AUTHOR"] = sthingsBase.GetStringPointerValue(commit.Author.Login)
+
+			allCommits = append(allCommits, commitInformation)
+
+		}
+	}
+
+	return
+}
 
 func ReadFileContentFromGitRepo(repo billy.Filesystem, filePath string) string {
 

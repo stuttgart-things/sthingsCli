@@ -116,8 +116,8 @@ func UploadObjectToMinioBucket(minioClient *minio.Client, bucket, sourcePath, ob
 func CreateMinioBucket(minioClient *minio.Client, bucket, location string) bool {
 
 	ctx := context.Background()
+	err := minioClient.MakeBucket(ctx, bucket, minio.MakeBucketOptions{Region: location, ObjectLocking: true})
 
-	err := minioClient.MakeBucket(ctx, bucket, minio.MakeBucketOptions{Region: location})
 	if err != nil {
 
 		// CHECK TO SEE IF WE ALREADY OWN THIS BUCKET (WHICH HAPPENS IF YOU RUN THIS TWICE)

@@ -24,6 +24,13 @@ var (
 	gitUser               = "patrick-hermann-sva"
 )
 
+func TestGetCommitInformationFromGithubRepo(t *testing.T) {
+
+	bla, he, err := GetCommitInformationFromGithubRepo("stuttgart-things", "kaeffken", "feature/issue-1/test", "latest")
+	fmt.Println(bla, he, err)
+
+}
+
 func TestCloneGitRepository(t *testing.T) {
 
 	assert := assert.New(t)

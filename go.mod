@@ -9,6 +9,7 @@ require (
 	github.com/go-git/go-billy/v5 v5.4.1
 	github.com/go-git/go-git/v5 v5.8.1
 	github.com/gomodule/redigo v1.8.3
+	github.com/google/go-github v17.0.0+incompatible
 	github.com/hashicorp/vault/api v1.9.0
 	github.com/jedib0t/go-pretty/v6 v6.4.6
 	github.com/minio/minio-go/v7 v7.0.66
@@ -18,7 +19,7 @@ require (
 	github.com/spf13/viper v1.16.0
 	github.com/stretchr/testify v1.8.4
 	github.com/stuttgart-things/redisqueue v0.0.0-20230628084515-1d31f7874df7
-	github.com/stuttgart-things/sthingsBase v0.1.23
+	github.com/stuttgart-things/sthingsBase v0.1.35
 	gopkg.in/yaml.v3 v3.0.1
 	sigs.k8s.io/yaml v1.3.0
 )
