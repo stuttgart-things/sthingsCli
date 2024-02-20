@@ -25,7 +25,7 @@ func GetRedisJSON(redisJSONHandler *rejson.Handler, jsonKey string) (jsonObject 
 
 	if err != nil {
 		fmt.Println(err)
-		log.Fatalf("Failed to JSONGet")
+		fmt.Println("Failed to JSONGet")
 		return
 
 	} else {
