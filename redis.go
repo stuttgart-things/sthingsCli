@@ -19,7 +19,7 @@ import (
 var redisClient *redis.Client
 var ctx = context.Background()
 
-func GetRedisJSON(redisJSONHandler *rejson.Handler, jsonKey string) (jsonObject []byte) {
+func GetRedisJSON(redisJSONHandler *rejson.Handler, jsonKey string) (jsonObject []byte, jsonExists bool) {
 
 	jsonObject, err := redigo.Bytes(redisJSONHandler.JSONGet(jsonKey, "."))
 
@@ -27,6 +27,9 @@ func GetRedisJSON(redisJSONHandler *rejson.Handler, jsonKey string) (jsonObject 
 		fmt.Println(err)
 		log.Fatalf("Failed to JSONGet")
 		return
+
+	} else {
+		jsonExists = true
 	}
 
 	return
@@ -36,15 +39,16 @@ func GetRedisJSON(redisJSONHandler *rejson.Handler, jsonKey string) (jsonObject 
 func SetRedisJSON(redisJSONHandler *rejson.Handler, jsonObject interface{}, jsonKey string) {
 
 	res, err := redisJSONHandler.JSONSet(jsonKey, ".", jsonObject)
+
 	if err != nil {
-		log.Fatalf("Failed to JSONSet")
+		log.Fatalf("FAILED TO JSONSET")
 		return
 	}
 
 	if res.(string) == "OK" {
-		fmt.Printf("Success: %s\n", res)
+		fmt.Printf("SUCCESS: %s\n", res)
 	} else {
-		fmt.Println("Failed to Set: ")
+		fmt.Println("FAILED TO SET: ")
 	}
 
 }

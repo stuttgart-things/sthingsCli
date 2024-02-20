@@ -26,8 +26,8 @@ var (
 
 func TestGetCommitInformationFromGithubRepo(t *testing.T) {
 
-	bla, he, err := GetCommitInformationFromGithubRepo("stuttgart-things", "kaeffken", "feature/issue-1/test", "latest")
-	fmt.Println(bla, he, err)
+	commitExists, commitInformation, err := GetCommitInformationFromGithubRepo("stuttgart-things", "kaeffken", "main", "latest")
+	fmt.Println(commitExists, commitInformation, err)
 
 }
 
