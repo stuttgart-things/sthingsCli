@@ -5,8 +5,6 @@ Copyright © 2024 Patrick Hermann patrick.hermann@sva.de
 package cli
 
 import (
-	"fmt"
-
 	"filippo.io/age"
 
 	"github.com/getsops/sops/v3"
@@ -29,7 +27,6 @@ func EncryptStore(ageKey, rawData string) (encryptedData string) {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(branches)
 
 	masterKey, err := keysource.MasterKeyFromRecipient(ageKey)
 	if err != nil {
