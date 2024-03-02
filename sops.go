@@ -21,7 +21,9 @@ import (
 var sopsVersion = "3.8.1"
 var unencryptedSuffix = "_unencrypted"
 
-func EncryptStore(store yaml.Store, ageKey, rawData string) (encryptedData string) {
+func EncryptStore(ageKey, rawData string) (encryptedData string) {
+
+	store := yaml.Store{}
 
 	branches, err := store.LoadPlainFile([]byte(rawData))
 	if err != nil {

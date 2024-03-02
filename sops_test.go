@@ -7,8 +7,6 @@ package cli
 import (
 	"fmt"
 
-	"github.com/getsops/sops/v3/stores/yaml"
-
 	"testing"
 )
 
@@ -32,8 +30,7 @@ func TestEncryptStore(t *testing.T) {
 
 	identity := GenerateAgeIdentitdy()
 	ageKey := identity.Recipient().String()
-	store := yaml.Store{}
 
-	EncryptStore(store, ageKey, rawSecretManifest)
+	EncryptStore(ageKey, rawSecretManifest)
 
 }
