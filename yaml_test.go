@@ -9,8 +9,6 @@ import (
 	"strings"
 	"testing"
 
-	sthingsBase "github.com/stuttgart-things/sthingsBase"
-
 	"github.com/stretchr/testify/assert"
 )
 
@@ -100,21 +98,5 @@ func TestConvertJSONToYAML(t *testing.T) {
 }
 
 func TestReadYamlKeyValuesFromFile(t *testing.T) {
-
-	expectedReadMe := "binary: [hello, this, that]\nname: patrick"
-
-	// var defaultsFile = `binary: [hello, this, that]`
-
-	// defaultsFile = sthingsCli.ReadFileContentFromGitRepo(repo, defaultsPath)
-
-	hello := ReadYamlKeyValuesFromFile([]byte(expectedReadMe))
-	fmt.Println(hello["binary"])
-
-	listContent, isList := sthingsBase.GetRegexSubMatch(hello["binary"].(string), `\[(.*?)\]`)
-	fmt.Println(isList, listContent)
-
-	for _, dog := range strings.Split(listContent, " ") {
-		fmt.Println(dog)
-	}
 
 }
