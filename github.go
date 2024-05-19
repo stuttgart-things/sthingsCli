@@ -74,7 +74,7 @@ func GetFileContent(fileArg string) (targetName string, b []byte, err error) {
 // GetReferenceObject RETURNS THE COMMIT BRANCH REFERENCE OBJECT IF IT EXISTS OR CREATES IT
 // FROM THE BASE BRANCH BEFORE RETURNING IT.
 
-func GetReferenceObject(sourceOwner, sourceRepo, commitBranch, baseBranch string) (ref *github.Reference, err error) {
+func GetReferenceObject(client *github.Client, sourceOwner, sourceRepo, commitBranch, baseBranch string) (ref *github.Reference, err error) {
 
 	if ref, _, err = client.Git.GetRef(ctx, sourceOwner, sourceRepo, "refs/heads/"+commitBranch); err == nil {
 		return ref, nil
