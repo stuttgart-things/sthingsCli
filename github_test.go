@@ -24,7 +24,7 @@ func TestGetReferenceObject_WithExistingBranch(t *testing.T) {
 
 	client = github.NewClient(nil).WithAuthToken(token)
 
-	// Call GetReferenceObject
+	// CALL GETREFERENCEOBJECT
 	GetReferenceObject(client, "stuttgart-things", "machineshop", "test", "main")
 
 }
