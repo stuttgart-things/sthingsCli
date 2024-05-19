@@ -18,7 +18,7 @@ var backgroundContext = context.Background()
 
 // GetGitTree GENERATES THE TREE TO COMMIT BASED ON THE GIVEN FILES AND THE COMMIT
 // OF THE REF YOU GOT IN GETREF.
-func GetGitTree(ref *github.Reference, sourceFiles, sourceOwner, sourceRepo string) (tree *github.Tree, err error) {
+func GetGitTree(client *github.Client, ref *github.Reference, sourceFiles, sourceOwner, sourceRepo string) (tree *github.Tree, err error) {
 
 	// CREATE A TREE WITH WHAT TO COMMIT.
 	entries := []*github.TreeEntry{}
