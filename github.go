@@ -159,9 +159,9 @@ func CreatePullRequest(client *github.Client, prSubject, prRepoOwner, sourceOwne
 	}
 
 	fmt.Printf("PR CREATED: %s\n", pr.GetHTMLURL())
-	fmt.Println(pr)
+	// for gettimg all fileds fmt.Println(pr)
 
-	prId = strconv.Itoa(int(*pr.ID))
+	prId = strconv.Itoa(int(*pr.Number))
 
 	return nil, prId
 }
