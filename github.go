@@ -9,6 +9,7 @@ import (
 	"errors"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/google/go-github/v62/github"
 )
@@ -95,4 +96,31 @@ func GetReferenceObject(client *github.Client, sourceOwner, sourceRepo, commitBr
 	newRef := &github.Reference{Ref: github.String("refs/heads/" + commitBranch), Object: &github.GitObject{SHA: baseRef.Object.SHA}}
 	ref, _, err = client.Git.CreateRef(ctx, sourceOwner, sourceRepo, newRef)
 	return ref, err
+}
+
+// pushCommit creates the commit in the given reference using the given tree.
+func PushCommit(client *github.Client, ref *github.Reference, tree *github.Tree, sourceOwner, sourceRepo string) (err error) {
+	// Get the parent commit to attach the commit to.
+	parent, _, err := client.Repositories.GetCommit(ctx, sourceOwner, sourceRepo, *ref.Object.SHA, nil)
+	if err != nil {
+		return err
+	}
+	// This is not always populated, but is needed.
+	parent.Commit.SHA = parent.SHA
+
+	// Create the commit using the tree.
+	date := time.Now()
+	author := &github.CommitAuthor{Date: &github.Timestamp{Time: date}, Name: ConvertStringToPointer(authorName), Email: ConvertStringToPointer(authorEmail)}
+	commit := &github.Commit{Author: author, Message: ConvertStringToPointer(commitMessage), Tree: tree, Parents: []*github.Commit{parent.Commit}}
+	opts := github.CreateCommitOptions{}
+
+	newCommit, _, err := client.Git.CreateCommit(ctx, sourceOwner, sourceRepo, commit, &opts)
+	if err != nil {
+		return err
+	}
+
+	// Attach the commit to the master branch.
+	ref.Object.SHA = newCommit.SHA
+	_, _, err = client.Git.UpdateRef(ctx, sourceOwner, sourceRepo, ref, false)
+	return err
 }
