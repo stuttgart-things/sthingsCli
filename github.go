@@ -130,7 +130,7 @@ func PushCommit(client *github.Client, ref *github.Reference, tree *github.Tree,
 }
 
 // CreatePullRequest CREATES A PULL REQUEST. BASED ON: HTTPS://GODOC.ORG/GITHUB.COM/GOOGLE/GO-GITHUB/GITHUB#EXAMPLE-PULLREQUESTSSERVICE-CREATE
-func CreatePullRequest(client *github.Client, prSubject, prRepoOwner, sourceOwner, commitBranch, prRepo, sourceRepo, repoBranch, prBranch, prDescription string) (err error) {
+func CreatePullRequest(client *github.Client, prSubject, prRepoOwner, sourceOwner, commitBranch, prRepo, sourceRepo, repoBranch, baseBranch, prDescription string) (err error) {
 
 	if prRepoOwner != "" && prRepoOwner != sourceOwner {
 		commitBranch = fmt.Sprintf("%s:%s", sourceOwner, commitBranch)
@@ -146,7 +146,7 @@ func CreatePullRequest(client *github.Client, prSubject, prRepoOwner, sourceOwne
 		Title:               sthingsBase.ConvertStringToPointer(prSubject),
 		Head:                sthingsBase.ConvertStringToPointer(commitBranch),
 		HeadRepo:            sthingsBase.ConvertStringToPointer(repoBranch),
-		Base:                sthingsBase.ConvertStringToPointer(prBranch),
+		Base:                sthingsBase.ConvertStringToPointer(baseBranch),
 		Body:                sthingsBase.ConvertStringToPointer(prDescription),
 		MaintainerCanModify: github.Bool(true),
 		//ADD LABELS
