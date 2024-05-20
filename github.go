@@ -11,6 +11,8 @@ import (
 	"strings"
 	"time"
 
+	sthingsBase "github.com/stuttgart-things/sthingsBase"
+
 	"github.com/google/go-github/v62/github"
 )
 
@@ -74,7 +76,6 @@ func GetFileContent(fileArg string) (targetName string, b []byte, err error) {
 
 // GetReferenceObject RETURNS THE COMMIT BRANCH REFERENCE OBJECT IF IT EXISTS OR CREATES IT
 // FROM THE BASE BRANCH BEFORE RETURNING IT.
-
 func GetReferenceObject(client *github.Client, sourceOwner, sourceRepo, commitBranch, baseBranch string) (ref *github.Reference, err error) {
 
 	if ref, _, err = client.Git.GetRef(ctx, sourceOwner, sourceRepo, "refs/heads/"+commitBranch); err == nil {
@@ -98,20 +99,22 @@ func GetReferenceObject(client *github.Client, sourceOwner, sourceRepo, commitBr
 	return ref, err
 }
 
-// pushCommit creates the commit in the given reference using the given tree.
-func PushCommit(client *github.Client, ref *github.Reference, tree *github.Tree, sourceOwner, sourceRepo string) (err error) {
-	// Get the parent commit to attach the commit to.
+// PushCommit CREATES THE COMMIT IN THE GIVEN REFERENCE USING THE GIVEN TREE
+func PushCommit(client *github.Client, ref *github.Reference, tree *github.Tree, sourceOwner, sourceRepo, authorName, authorEmail, commitMessage string) (err error) {
+
+	// GET THE PARENT COMMIT TO ATTACH THE COMMIT TO.
 	parent, _, err := client.Repositories.GetCommit(ctx, sourceOwner, sourceRepo, *ref.Object.SHA, nil)
 	if err != nil {
 		return err
 	}
-	// This is not always populated, but is needed.
+
+	// THIS IS NOT ALWAYS POPULATED, BUT IS NEEDED.
 	parent.Commit.SHA = parent.SHA
 
-	// Create the commit using the tree.
+	// CREATE THE COMMIT USING THE TREE.
 	date := time.Now()
-	author := &github.CommitAuthor{Date: &github.Timestamp{Time: date}, Name: ConvertStringToPointer(authorName), Email: ConvertStringToPointer(authorEmail)}
-	commit := &github.Commit{Author: author, Message: ConvertStringToPointer(commitMessage), Tree: tree, Parents: []*github.Commit{parent.Commit}}
+	author := &github.CommitAuthor{Date: &github.Timestamp{Time: date}, Name: sthingsBase.ConvertStringToPointer(authorName), Email: sthingsBase.ConvertStringToPointer(authorEmail)}
+	commit := &github.Commit{Author: author, Message: sthingsBase.ConvertStringToPointer(commitMessage), Tree: tree, Parents: []*github.Commit{parent.Commit}}
 	opts := github.CreateCommitOptions{}
 
 	newCommit, _, err := client.Git.CreateCommit(ctx, sourceOwner, sourceRepo, commit, &opts)
@@ -119,7 +122,7 @@ func PushCommit(client *github.Client, ref *github.Reference, tree *github.Tree,
 		return err
 	}
 
-	// Attach the commit to the master branch.
+	// ATTACH THE COMMIT TO THE MASTER BRANCH.
 	ref.Object.SHA = newCommit.SHA
 	_, _, err = client.Git.UpdateRef(ctx, sourceOwner, sourceRepo, ref, false)
 	return err
