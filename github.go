@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 
@@ -130,7 +131,7 @@ func PushCommit(client *github.Client, ref *github.Reference, tree *github.Tree,
 }
 
 // CreatePullRequest CREATES A PULL REQUEST. BASED ON: HTTPS://GODOC.ORG/GITHUB.COM/GOOGLE/GO-GITHUB/GITHUB#EXAMPLE-PULLREQUESTSSERVICE-CREATE
-func CreatePullRequest(client *github.Client, prSubject, prRepoOwner, sourceOwner, commitBranch, prRepo, sourceRepo, repoBranch, baseBranch, prDescription string) (err error) {
+func CreatePullRequest(client *github.Client, prSubject, prRepoOwner, sourceOwner, commitBranch, prRepo, sourceRepo, repoBranch, baseBranch, prDescription string) (err error, prId string) {
 
 	if prRepoOwner != "" && prRepoOwner != sourceOwner {
 		commitBranch = fmt.Sprintf("%s:%s", sourceOwner, commitBranch)
@@ -154,9 +155,13 @@ func CreatePullRequest(client *github.Client, prSubject, prRepoOwner, sourceOwne
 
 	pr, _, err := client.PullRequests.Create(ctx, prRepoOwner, prRepo, newPR)
 	if err != nil {
-		return err
+		return err, "NONE"
 	}
 
 	fmt.Printf("PR CREATED: %s\n", pr.GetHTMLURL())
-	return nil
+	fmt.Println(pr)
+
+	prId = strconv.Itoa(int(*pr.ID))
+
+	return nil, prId
 }
