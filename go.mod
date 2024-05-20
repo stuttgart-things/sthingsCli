@@ -8,7 +8,7 @@ require (
 	github.com/allegro/bigcache/v3 v3.1.0
 	github.com/atc0005/go-teams-notify/v2 v2.7.1
 	github.com/getsops/sops/v3 v3.8.1
-	github.com/go-git/go-billy/v5 v5.4.1
+	github.com/go-git/go-billy/v5 v5.5.0
 	github.com/go-git/go-git/v5 v5.8.1
 	github.com/gomodule/redigo v1.8.3
 	github.com/google/go-github v17.0.0+incompatible
@@ -65,6 +65,7 @@ require (
 	github.com/cloudflare/circl v1.3.3 // indirect
 	github.com/coreos/go-semver v0.3.1 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.3 // indirect
+	github.com/cyphar/filepath-securejoin v0.2.4 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
