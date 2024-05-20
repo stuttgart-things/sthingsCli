@@ -6,7 +6,7 @@ toolchain go1.22.3
 
 require (
 	filippo.io/age v1.1.1
-	github.com/AlecAivazis/survey/v2 v2.3.6
+	github.com/AlecAivazis/survey/v2 v2.3.7
 	github.com/allegro/bigcache/v3 v3.1.0
 	github.com/atc0005/go-teams-notify/v2 v2.7.1
 	github.com/getsops/sops/v3 v3.8.1
