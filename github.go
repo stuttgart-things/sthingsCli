@@ -7,6 +7,7 @@ package cli
 import (
 	"context"
 	"errors"
+	"fmt"
 	"os"
 	"strings"
 	"time"
@@ -126,4 +127,36 @@ func PushCommit(client *github.Client, ref *github.Reference, tree *github.Tree,
 	ref.Object.SHA = newCommit.SHA
 	_, _, err = client.Git.UpdateRef(ctx, sourceOwner, sourceRepo, ref, false)
 	return err
+}
+
+// CreatePullRequest CREATES A PULL REQUEST. BASED ON: HTTPS://GODOC.ORG/GITHUB.COM/GOOGLE/GO-GITHUB/GITHUB#EXAMPLE-PULLREQUESTSSERVICE-CREATE
+func CreatePullRequest(client *github.Client, prSubject, prRepoOwner, sourceOwner, commitBranch, prRepo, sourceRepo, repoBranch, prBranch, prDescription string) (err error) {
+
+	if prRepoOwner != "" && prRepoOwner != sourceOwner {
+		commitBranch = fmt.Sprintf("%s:%s", sourceOwner, commitBranch)
+	} else {
+		prRepoOwner = sourceOwner
+	}
+
+	if prRepo == "" {
+		prRepo = sourceRepo
+	}
+
+	newPR := &github.NewPullRequest{
+		Title:               sthingsBase.ConvertStringToPointer(prSubject),
+		Head:                sthingsBase.ConvertStringToPointer(commitBranch),
+		HeadRepo:            sthingsBase.ConvertStringToPointer(repoBranch),
+		Base:                sthingsBase.ConvertStringToPointer(prBranch),
+		Body:                sthingsBase.ConvertStringToPointer(prDescription),
+		MaintainerCanModify: github.Bool(true),
+		//ADD LABELS
+	}
+
+	pr, _, err := client.PullRequests.Create(ctx, prRepoOwner, prRepo, newPR)
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("PR CREATED: %s\n", pr.GetHTMLURL())
+	return nil
 }
