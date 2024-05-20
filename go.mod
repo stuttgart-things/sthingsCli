@@ -1,8 +1,6 @@
 module github.com/stuttgart-things/sthingsCli
 
-go 1.21
-
-toolchain go1.22.3
+go 1.22.3
 
 require (
 	filippo.io/age v1.1.1
@@ -22,7 +20,7 @@ require (
 	github.com/redis/go-redis/v9 v9.0.5
 	github.com/schollz/progressbar/v3 v3.13.1
 	github.com/spf13/viper v1.16.0
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 	github.com/stuttgart-things/redisqueue v0.0.0-20230628084515-1d31f7874df7
 	github.com/stuttgart-things/sthingsBase v0.1.38
 	gopkg.in/yaml.v3 v3.0.1
@@ -102,7 +100,6 @@ require (
 	github.com/huandu/xstrings v1.3.3 // indirect
 	github.com/imdario/mergo v0.3.13 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
-	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
 	github.com/klauspost/compress v1.17.6 // indirect
@@ -117,15 +114,12 @@ require (
 	github.com/mattn/goveralls v0.0.12 // indirect
 	github.com/mgutz/ansi v0.0.0-20170206155736-9520e82c474b // indirect
 	github.com/minio/md5-simd v1.1.2 // indirect
-	github.com/minio/sha256-simd v1.0.1 // indirect
 	github.com/mitchellh/colorstring v0.0.0-20190213212951-d06e56a500db // indirect
 	github.com/mitchellh/copystructure v1.0.0 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/go-wordwrap v1.0.1 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.0 // indirect
-	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
-	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
 	github.com/pjbgf/sha1cd v0.3.0 // indirect
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8 // indirect
