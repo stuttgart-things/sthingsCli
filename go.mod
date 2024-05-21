@@ -16,7 +16,7 @@ require (
 	github.com/hashicorp/vault/api v1.13.0
 	github.com/jedib0t/go-pretty/v6 v6.5.9
 	github.com/minio/minio-go/v7 v7.0.70
-	github.com/nitishm/go-rejson/v4 v4.1.1-0.20230331060235-d2aa875760e4
+	github.com/nitishm/go-rejson/v4 v4.2.0
 	github.com/redis/go-redis/v9 v9.0.5
 	github.com/schollz/progressbar/v3 v3.13.1
 	github.com/spf13/viper v1.16.0
