@@ -529,6 +529,8 @@ github.com/stuttgart-things/redisqueue v0.0.0-20230628084515-1d31f7874df7 h1:nVo
 github.com/stuttgart-things/redisqueue v0.0.0-20230628084515-1d31f7874df7/go.mod h1:RhH+7myjNLGs/BFeYO5U7ekmM7OsymsIOUN/DkewR3g=
 github.com/stuttgart-things/sthingsBase v0.1.38 h1:jIXm/+qBYFxx3Heuycv87p23FV9Zmz94yGbKIP4ukQ8=
 github.com/stuttgart-things/sthingsBase v0.1.38/go.mod h1:VAHWgGF7p1/DgITNj5l2KJWhhtt1ujcR5EK9jFWH7Bo=
+github.com/stuttgart-things/sthingsBase v0.1.39 h1:gDRyAuVY2e+/gFb1yjC2CN8O0U28ixeSSbJ2jPByzHA=
+github.com/stuttgart-things/sthingsBase v0.1.39/go.mod h1:9YbYcRRpiIrY7m1C3JsU22esKj0axN1ds7EbsG7wWrs=
 github.com/subosito/gotenv v1.4.2 h1:X1TuBLAMDFbaTAChgCBLu3DU3UPyELpnF2jjJ2cz/S8=
 github.com/subosito/gotenv v1.4.2/go.mod h1:ayKnFf/c6rvx/2iiLrJUk1e6plDbT3edrFNGqEflhK0=
 github.com/trivago/tgo v1.0.7 h1:uaWH/XIy9aWYWpjm2CU3RpcqZXmX2ysQ9/Go+d9gyrM=
