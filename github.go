@@ -13,9 +13,8 @@ import (
 	"strings"
 	"time"
 
-	sthingsBase "github.com/stuttgart-things/sthingsBase"
-
 	"github.com/google/go-github/v62/github"
+	sthingsBase "github.com/stuttgart-things/sthingsBase"
 )
 
 var client *github.Client
@@ -164,4 +163,24 @@ func CreatePullRequest(client *github.Client, prSubject, prRepoOwner, sourceOwne
 	prId = strconv.Itoa(int(*pr.Number))
 
 	return nil, prId
+}
+
+// CreateRepository CREATES A GITHUB REPOSITORY
+func CreateRepository(client *github.Client, name, description, repoOwner string, privateRepo, autoInit bool) (err error, repoName string) {
+
+	r := &github.Repository{
+		Name:        sthingsBase.ConvertStringToPointer(name),
+		Private:     sthingsBase.ConvertBoolToPointer(privateRepo),
+		Description: sthingsBase.ConvertStringToPointer(description),
+		AutoInit:    sthingsBase.ConvertBoolToPointer(autoInit),
+	}
+
+	repo, _, err := client.Repositories.Create(ctx, repoOwner, r)
+	if err != nil {
+		return err, ""
+	} else {
+		fmt.Printf("SUCCESSFULLY CREATED NEW REPO: %v\n", repo.GetName())
+	}
+
+	return err, repo.GetName()
 }
