@@ -184,3 +184,17 @@ func CreateRepository(client *github.Client, name, description, repoOwner string
 
 	return err, repo.GetName()
 }
+
+// CreateRepository CREATES A GITHUB REPOSITORY
+func MergePullRequest(client *github.Client, repository, repoOwner, message, mergeMethod string, pullRequestID int) {
+
+	options := &github.PullRequestOptions{
+		CommitTitle:        repository,
+		MergeMethod:        mergeMethod,
+		DontDefaultIfBlank: false,
+	}
+
+	mergeResult, resp, _ := client.PullRequests.Merge(ctx, repoOwner, repository, pullRequestID, message, options)
+	fmt.Println(mergeResult, resp)
+
+}

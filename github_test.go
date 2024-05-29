@@ -66,3 +66,16 @@ func TestReadFileToVar_WithNonExistentFile(t *testing.T) {
 	// ASSERT THAT THE RETURNED ERROR IS NOT NIL
 	assert.NotNil(t, err)
 }
+
+// func TestMergePullRequest(t *testing.T) {
+
+// 	token := ""
+// 	if token == "" {
+// 		log.Fatal("UNAUTHORIZED: NO TOKEN PRESENT")
+// 	}
+
+// 	client = github.NewClient(nil).WithAuthToken(token)
+
+// 	MergePullRequest(client, "stuttgart-things", "stuttgart-things", "merge", "merge", 241)
+
+// }
