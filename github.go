@@ -198,3 +198,11 @@ func MergePullRequest(client *github.Client, repository, repoOwner, message, mer
 	fmt.Println(mergeResult, resp)
 
 }
+
+// DeleteBranch DELETES A BRANCH
+func DeleteBranch(client *github.Client, repository, repoOwner, branchName string) {
+
+	response, error := client.Git.DeleteRef(ctx, repoOwner, repository, branchName)
+	fmt.Println(response, error)
+
+}
