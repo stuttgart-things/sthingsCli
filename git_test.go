@@ -24,13 +24,6 @@ var (
 	gitUser               = "patrick-hermann-sva"
 )
 
-func TestGetCommitInformationFromGithubRepo(t *testing.T) {
-
-	commitExists, commitInformation, err := GetCommitInformationFromGithubRepo("stuttgart-things", "kaeffken", "main", "latest")
-	fmt.Println(commitExists, commitInformation, err)
-
-}
-
 func TestCloneGitRepository(t *testing.T) {
 
 	assert := assert.New(t)
@@ -79,3 +72,22 @@ func TestReadFileContentFromGitRepo(t *testing.T) {
 	fmt.Println("TEST SUCCESSFULLY")
 
 }
+
+// func TestAddCommitFileToGitRepository(t *testing.T) {
+
+// 	gitRepository := "https://github.com/stuttgart-things/kaeffken.git"
+// 	gitBranch := "main"
+
+// 	auth := CreateGitAuth("patrick-hermann-sva", "to-be-added")
+
+// 	// filesAdd := []FilesToAdd{
+// 	// 	{Filename: "hello5.txt", Filecontent: []byte{71, 111}},
+// 	// 	{Filename: "hello6.txt", Filecontent: []byte{72, 112}},
+// 	// }
+
+// 	// TEST FOR REMOVING FILES
+// 	removeFiles := []string{"hello5.txt", "hello6.txt"}
+
+// 	AddCommitFileToGitRepository(gitRepository, gitBranch, auth, nil, removeFiles, "test")
+
+// }

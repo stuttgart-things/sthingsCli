@@ -206,3 +206,44 @@ func DeleteBranch(client *github.Client, repository, repoOwner, branchName strin
 	fmt.Println(response, error)
 
 }
+
+func GetCommitInformationFromGithubRepo(userName, repoName, branchName, option string) (getCommits bool, allCommits []map[string]interface{}, err error) {
+
+	client := github.NewClient(nil)
+
+	opt := &github.CommitsListOptions{
+		SHA: branchName,
+	}
+
+	commits, response, err := client.Repositories.ListCommits(context.Background(), userName, repoName, opt)
+
+	if err != nil && response.StatusCode != 200 {
+		fmt.Println(err)
+		return
+	} else {
+		getCommits = true
+	}
+
+	if option == "latest" {
+
+		commitInformation := make(map[string]interface{})
+		commitInformation["REVISION"] = sthingsBase.GetStringPointerValue(commits[0].SHA)
+		commitInformation["AUTHOR"] = sthingsBase.GetStringPointerValue(commits[0].Author.Login)
+
+		allCommits = append(allCommits, commitInformation)
+
+	} else {
+
+		for _, commit := range commits {
+			commitInformation := make(map[string]interface{})
+
+			commitInformation["REVISION"] = sthingsBase.GetStringPointerValue(commit.SHA)
+			commitInformation["AUTHOR"] = sthingsBase.GetStringPointerValue(commit.Author.Login)
+
+			allCommits = append(allCommits, commitInformation)
+
+		}
+	}
+
+	return
+}

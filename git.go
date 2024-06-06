@@ -5,12 +5,9 @@ Copyright © 2023 Patrick Hermann patrick.hermann@sva.de
 package cli
 
 import (
-	"context"
 	"fmt"
 	"io"
 	"os"
-
-	sthingsBase "github.com/stuttgart-things/sthingsBase"
 
 	billy "github.com/go-git/go-billy/v5"
 	plumbing "github.com/go-git/go-git/v5/plumbing"
@@ -18,50 +15,13 @@ import (
 
 	memfs "github.com/go-git/go-billy/v5/memfs"
 	memory "github.com/go-git/go-git/v5/storage/memory"
-	"github.com/google/go-github/github"
 
 	git "github.com/go-git/go-git/v5"
 )
 
-func GetCommitInformationFromGithubRepo(userName, repoName, branchName, option string) (getCommits bool, allCommits []map[string]interface{}, err error) {
-
-	client := github.NewClient(nil)
-
-	opt := &github.CommitsListOptions{
-		SHA: branchName,
-	}
-
-	commits, response, err := client.Repositories.ListCommits(context.Background(), userName, repoName, opt)
-
-	if err != nil && response.StatusCode != 200 {
-		fmt.Println(err)
-		return
-	} else {
-		getCommits = true
-	}
-
-	if option == "latest" {
-
-		commitInformation := make(map[string]interface{})
-		commitInformation["REVISION"] = sthingsBase.GetStringPointerValue(commits[0].SHA)
-		commitInformation["AUTHOR"] = sthingsBase.GetStringPointerValue(commits[0].Author.Login)
-
-		allCommits = append(allCommits, commitInformation)
-
-	} else {
-
-		for _, commit := range commits {
-			commitInformation := make(map[string]interface{})
-
-			commitInformation["REVISION"] = sthingsBase.GetStringPointerValue(commit.SHA)
-			commitInformation["AUTHOR"] = sthingsBase.GetStringPointerValue(commit.Author.Login)
-
-			allCommits = append(allCommits, commitInformation)
-
-		}
-	}
-
-	return
+type FilesToAdd struct {
+	Filename    string
+	Filecontent []byte
 }
 
 func ReadFileContentFromGitRepo(repo billy.Filesystem, filePath string) string {
@@ -154,7 +114,7 @@ func CreateGitAuth(gitUser, gitToken string) *http.BasicAuth {
 	}
 }
 
-func AddCommitFileToGitRepository(repository, branchName string, auth *http.BasicAuth, fileContent []byte, filePath, commitMsg string) (pushed bool) {
+func AddCommitFileToGitRepository(repository, branchName string, auth *http.BasicAuth, add []FilesToAdd, remove []string, commitMsg string) (pushed bool) {
 
 	// INIT MEMORY STORAGE AND FS
 	storer := memory.NewStorage()
@@ -183,20 +143,33 @@ func AddCommitFileToGitRepository(repository, branchName string, auth *http.Basi
 
 	fmt.Println(w)
 
-	// CREATE NEW FILE
-	newFile, err := fs.Create(filePath)
-	if err != nil {
-		fmt.Println("Could not create new file")
+	// CREATE NEW FILES TO WORKTREE
+	for _, file := range add {
+
+		newFile, err := fs.Create(file.Filename)
+		if err != nil {
+			fmt.Println("COULD NOT CREATE FILE", file.Filename)
+		}
+		newFile.Write(file.Filecontent)
+		newFile.Close()
+
+		// RUN GIT STATUS BEFORE ADDING THE FILE TO THE WORKTREE
+		fmt.Println(w.Status())
+
+		// GIT ADD $FILEPATH
+		w.Add(file.Filename)
 	}
-	newFile.Write(fileContent)
-	newFile.Close()
 
-	// RUN GIT STATUS BEFORE ADDING THE FILE TO THE WORKTREE
-	fmt.Println(w.Status())
+	// REMOVE FILES
+	for _, file := range remove {
 
-	// GIT ADD $FILEPATH
-	w.Add(filePath)
+		err2 := fs.Remove(file)
+		if err2 != nil {
+			fmt.Println("COULD NOT REMOVE FILE")
+		}
 
+		w.Add(file)
+	}
 	// RUN GIT STATUS AFTER THE FILE HAS BEEN ADDED ADDING TO THE WORKTREE
 	fmt.Println(w.Status())
 
@@ -209,9 +182,9 @@ func AddCommitFileToGitRepository(repository, branchName string, auth *http.Basi
 		Auth:       auth,
 	})
 	if err != nil {
-		fmt.Println("Could not git push: %w", err)
+		fmt.Println("COULD NOT GIT PUSH: %w", err)
 	}
-	fmt.Println("Remote updated.", filePath)
+	fmt.Println("REMOTE UPDATED.")
 
 	pushed = true
 

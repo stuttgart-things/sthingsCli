@@ -5,6 +5,7 @@ Copyright © 2024 Patrick Hermann patrick.hermann@sva.de
 package cli
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -79,3 +80,10 @@ func TestReadFileToVar_WithNonExistentFile(t *testing.T) {
 // 	MergePullRequest(client, "stuttgart-things", "stuttgart-things", "merge", "merge", 241)
 
 // }
+
+func TestGetCommitInformationFromGithubRepo(t *testing.T) {
+
+	commitExists, commitInformation, err := GetCommitInformationFromGithubRepo("stuttgart-things", "kaeffken", "main", "latest")
+	fmt.Println(commitExists, commitInformation, err)
+
+}
