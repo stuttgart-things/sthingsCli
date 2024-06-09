@@ -17,7 +17,7 @@ require (
 	github.com/minio/minio-go/v7 v7.0.71
 	github.com/nitishm/go-rejson/v4 v4.2.0
 	github.com/redis/go-redis/v9 v9.5.2
-	github.com/schollz/progressbar/v3 v3.14.3
+	github.com/schollz/progressbar/v3 v3.14.4
 	github.com/spf13/viper v1.19.0
 	github.com/stretchr/testify v1.9.0
 	github.com/stuttgart-things/redisqueue v0.0.0-20230628084515-1d31f7874df7
