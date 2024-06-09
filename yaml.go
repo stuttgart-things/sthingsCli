@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	yamlv2 "gopkg.in/yaml.v2"
 	yamlv3 "gopkg.in/yaml.v3"
 
 	"sigs.k8s.io/yaml"
@@ -118,7 +119,7 @@ func GetYAMLMapValues(content []byte, dictName string) (transformedValues map[st
 	obj := make(map[string]interface{})
 	transformedValues = make(map[string]interface{})
 
-	err := yaml.Unmarshal(content, obj)
+	err := yamlv2.Unmarshal(content, obj)
 	if err != nil {
 		fmt.Printf("UNMARSHALING: %v", err)
 	}
