@@ -112,3 +112,24 @@ func ConvertJSONToYAML(jsonString string) string {
 
 	return string(convertedYAML)
 }
+
+func GetYAMLMapValues(content []byte, dictName string) (transformedValues map[string]interface{}) {
+
+	obj := make(map[string]interface{})
+	transformedValues = make(map[string]interface{})
+
+	err := yaml.Unmarshal(content, obj)
+	if err != nil {
+		fmt.Printf("UNMARSHALING: %v", err)
+	}
+
+	// ITERATE OVER KEYS AND VALUES
+	for dictKey, subKey := range obj[dictName].(map[interface{}]interface{}) {
+
+		for subKey, value := range subKey.(map[interface{}]interface{}) {
+			transformedValues[dictName+"_"+fmt.Sprint(dictKey)+"_"+fmt.Sprint(subKey)] = fmt.Sprint(value)
+		}
+	}
+
+	return transformedValues
+}
