@@ -6,13 +6,12 @@ require (
 	filippo.io/age v1.2.0
 	github.com/AlecAivazis/survey/v2 v2.3.7
 	github.com/allegro/bigcache/v3 v3.1.0
-	github.com/atc0005/go-teams-notify/v2 v2.10.0
+	github.com/atc0005/go-teams-notify/v2 v2.11.0-alpha.1
 	github.com/getsops/sops/v3 v3.9.0
 	github.com/go-git/go-billy/v5 v5.5.0
 	github.com/go-git/go-git/v5 v5.12.0
 	github.com/gomodule/redigo v1.9.2
 	github.com/google/go-github/v62 v62.0.0
-	github.com/google/go-github/v63 v63.0.0
 	github.com/hashicorp/vault/api v1.14.0
 	github.com/jedib0t/go-pretty/v6 v6.5.9
 	github.com/minio/minio-go/v7 v7.0.73
@@ -32,7 +31,6 @@ require (
 	cloud.google.com/go v0.115.0 // indirect
 	cloud.google.com/go/auth v0.6.0 // indirect
 	cloud.google.com/go/auth/oauth2adapt v0.2.2 // indirect
-	cloud.google.com/go/compute v1.27.0 // indirect
 	cloud.google.com/go/compute/metadata v0.3.0 // indirect
 	cloud.google.com/go/iam v1.1.8 // indirect
 	cloud.google.com/go/kms v1.18.0 // indirect
@@ -185,7 +183,6 @@ require (
 	golang.org/x/time v0.5.0 // indirect
 	golang.org/x/tools v0.22.0 // indirect
 	google.golang.org/api v0.186.0 // indirect
-	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto v0.0.0-20240624140628-dc46fd24d27d // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20240624140628-dc46fd24d27d // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240624140628-dc46fd24d27d // indirect
