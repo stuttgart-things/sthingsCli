@@ -66,6 +66,8 @@ github.com/atc0005/go-teams-notify/v2 v2.11.0-alpha.1 h1:PHX3wtpybiMyDlajAC2KJe3
 github.com/atc0005/go-teams-notify/v2 v2.11.0-alpha.1/go.mod h1:WSv9moolRsBcpZbwEf6gZxj7h0uJlJskJq5zkEWKO8Y=
 github.com/atc0005/go-teams-notify/v2 v2.11.0-alpha.5 h1:GOj11P9UelbBsxLE4CKo957xiOZkqIu8/X0Imcvjy/I=
 github.com/atc0005/go-teams-notify/v2 v2.11.0-alpha.5/go.mod h1:WSv9moolRsBcpZbwEf6gZxj7h0uJlJskJq5zkEWKO8Y=
+github.com/atc0005/go-teams-notify/v2 v2.11.0-rc.1 h1:ukErWdXsQD8Ov8fedxuaCUBrEXAwH/ULVHyYIRgjsaE=
+github.com/atc0005/go-teams-notify/v2 v2.11.0-rc.1/go.mod h1:WSv9moolRsBcpZbwEf6gZxj7h0uJlJskJq5zkEWKO8Y=
 github.com/aws/aws-sdk-go-v2 v1.30.0 h1:6qAwtzlfcTtcL8NHtbDQAqgM5s6NDipQTkPxyH/6kAA=
 github.com/aws/aws-sdk-go-v2 v1.30.0/go.mod h1:ffIFB97e2yNsv4aTSGkqtHnppsIJzw7G7BReUZ3jCXM=
 github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.6.2 h1:x6xsQXGSmW6frevwDA+vi/wqhp1ct18mVXYN08/93to=
