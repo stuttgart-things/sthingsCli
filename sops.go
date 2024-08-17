@@ -5,12 +5,15 @@ Copyright © 2024 Patrick Hermann patrick.hermann@sva.de
 package cli
 
 import (
+	"fmt"
+
 	"filippo.io/age"
 
 	"github.com/getsops/sops/v3"
 	"github.com/getsops/sops/v3/aes"
 	keysource "github.com/getsops/sops/v3/age"
 	"github.com/getsops/sops/v3/cmd/sops/common"
+	"github.com/getsops/sops/v3/decrypt"
 	"github.com/getsops/sops/v3/keys"
 	"github.com/getsops/sops/v3/keyservice"
 	"github.com/getsops/sops/v3/stores/yaml"
@@ -73,4 +76,15 @@ func GenerateAgeIdentitdy() (identity *age.X25519Identity) {
 	}
 
 	return
+}
+
+func DecryptSopsFile(encryptedSopsFilePath, fileExtension string) (err error, decryptedSopsFile string) {
+
+	plain, err := decrypt.File(encryptedSopsFilePath, fileExtension)
+
+	if err != nil {
+		fmt.Println(fmt.Errorf("FAILED TO DECRYPT: %w", err))
+	}
+
+	return err, string(plain)
 }

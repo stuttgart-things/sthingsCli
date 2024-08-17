@@ -6,6 +6,7 @@ package cli
 
 import (
 	"fmt"
+	"os"
 
 	"testing"
 )
@@ -33,4 +34,21 @@ func TestEncryptStore(t *testing.T) {
 
 	EncryptStore(ageKey, rawSecretManifest)
 
+}
+
+func TestDecryptSopsFile(t *testing.T) {
+
+	identity := GenerateAgeIdentitdy()
+	ageKey := identity.Recipient().String()
+
+	encryptedData := EncryptStore(ageKey, rawSecretManifest)
+
+	os.Setenv("SOPS_AGE_KEY_FILE", ageKey)
+
+	err, plain := DecryptSopsFile(encryptedData, "yaml")
+	if err != nil {
+		fmt.Errorf("Failed to decrypt: %w", err)
+	}
+
+	fmt.Println(string(plain))
 }
