@@ -130,7 +130,7 @@ func PushCommit(client *github.Client, ref *github.Reference, tree *github.Tree,
 }
 
 // CreatePullRequest CREATES A PULL REQUEST. BASED ON: HTTPS://GODOC.ORG/GITHUB.COM/GOOGLE/GO-GITHUB/GITHUB#EXAMPLE-PULLREQUESTSSERVICE-CREATE
-func CreatePullRequest(client *github.Client, prSubject, prRepoOwner, sourceOwner, commitBranch, prRepo, sourceRepo, repoBranch, baseBranch, prDescription string) (err error, prId string) {
+func CreatePullRequest(client *github.Client, prSubject, prRepoOwner, sourceOwner, commitBranch, prRepo, sourceRepo, repoBranch, baseBranch, prDescription string, prLabels []string) (err error, prId string) {
 
 	if prRepoOwner != "" && prRepoOwner != sourceOwner {
 		commitBranch = fmt.Sprintf("%s:%s", sourceOwner, commitBranch)
@@ -159,14 +159,14 @@ func CreatePullRequest(client *github.Client, prSubject, prRepoOwner, sourceOwne
 
 	fmt.Printf("PR CREATED: %s\n", pr.GetHTMLURL())
 	// for gettimg all fileds fmt.Println(pr)
-	prId = strconv.Itoa(int(*pr.Number))
 
-	newLabels, _, err := client.Issues.AddLabelsToIssue(ctx, prRepoOwner, prRepo, int(*pr.Number), []string{"bla"})
+	newLabels, _, err := client.Issues.AddLabelsToIssue(ctx, prRepoOwner, prRepo, int(*pr.Number), prLabels)
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	fmt.Println(newLabels)
+	prId = strconv.Itoa(int(*pr.Number))
 
 	return nil, prId
 }
