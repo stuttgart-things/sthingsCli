@@ -159,8 +159,14 @@ func CreatePullRequest(client *github.Client, prSubject, prRepoOwner, sourceOwne
 
 	fmt.Printf("PR CREATED: %s\n", pr.GetHTMLURL())
 	// for gettimg all fileds fmt.Println(pr)
-
 	prId = strconv.Itoa(int(*pr.Number))
+
+	newLabels, _, err := client.Issues.AddLabelsToIssue(ctx, prRepoOwner, prRepo, int(*pr.Number), []string{"bla"})
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(newLabels)
 
 	return nil, prId
 }
