@@ -149,7 +149,6 @@ func CreatePullRequest(client *github.Client, prSubject, prRepoOwner, sourceOwne
 		Base:                sthingsBase.ConvertStringToPointer(baseBranch),
 		Body:                sthingsBase.ConvertStringToPointer(prDescription),
 		MaintainerCanModify: github.Bool(true),
-		//ADD LABELS
 	}
 
 	pr, _, err := client.PullRequests.Create(ctx, prRepoOwner, prRepo, newPR)
@@ -160,12 +159,16 @@ func CreatePullRequest(client *github.Client, prSubject, prRepoOwner, sourceOwne
 	fmt.Printf("PR CREATED: %s\n", pr.GetHTMLURL())
 	// for gettimg all fileds fmt.Println(pr)
 
-	newLabels, _, err := client.Issues.AddLabelsToIssue(ctx, prRepoOwner, prRepo, int(*pr.Number), prLabels)
-	if err != nil {
-		fmt.Println(err)
+	if len(prLabels) == 0 {
+
+		newLabels, _, err := client.Issues.AddLabelsToIssue(ctx, prRepoOwner, prRepo, int(*pr.Number), prLabels)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		fmt.Println("ADDED LABELS TO PR", newLabels)
 	}
 
-	fmt.Println(newLabels)
 	prId = strconv.Itoa(int(*pr.Number))
 
 	return nil, prId
