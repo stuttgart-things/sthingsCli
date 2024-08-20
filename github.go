@@ -159,7 +159,7 @@ func CreatePullRequest(client *github.Client, prSubject, prRepoOwner, sourceOwne
 	fmt.Printf("PR CREATED: %s\n", pr.GetHTMLURL())
 	// for gettimg all fileds fmt.Println(pr)
 
-	if len(prLabels) == 0 {
+	if len(prLabels) != 0 {
 
 		newLabels, _, err := client.Issues.AddLabelsToIssue(ctx, prRepoOwner, prRepo, int(*pr.Number), prLabels)
 		if err != nil {
