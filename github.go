@@ -8,6 +8,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -255,4 +256,24 @@ func GetCommitInformationFromGithubRepo(userName, repoName, branchName, option s
 	}
 
 	return
+}
+
+func GetFileContentFromGithubRepo(client *github.Client, userName, repoName, branchName, filePath string) (content string, err error) {
+
+	opts := &github.RepositoryContentGetOptions{Ref: branchName}
+
+	// Fetch the file content
+	fileContent, _, _, err := client.Repositories.GetContents(ctx, userName, repoName, filePath, opts)
+	if err != nil {
+		log.Fatalf("Error fetching file content: %v", err)
+	}
+
+	// Decode the file content
+	content, err = fileContent.GetContent()
+	if err != nil {
+		log.Fatalf("Error decoding file content: %v", err)
+	}
+
+	return content, nil
+
 }
