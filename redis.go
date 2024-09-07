@@ -238,6 +238,15 @@ func CreateRedisSearchIndex(client *redisearch.Client, schema *redisearch.Schema
 
 }
 
+// INDEX DOCUMENT
+func IndexDocument(client *redisearch.Client, document redisearch.Document) {
+
+	if err := client.Index(document); err != nil {
+		log.Fatalf("Could not index document: %v", err)
+	}
+
+}
+
 // DROP REDISEARCH INDEX
 func DropRedisSearchIndex(client *redisearch.Client) {
 
