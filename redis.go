@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/RediSearch/redisearch-go/redisearch"
 	redigo "github.com/gomodule/redigo/redis"
 	"github.com/nitishm/go-rejson/v4"
 	"github.com/stuttgart-things/redisqueue"
@@ -190,4 +191,70 @@ func EnqueueDataInRedisStreams(connectionString, redisPassword, stream string, v
 	}
 
 	return
+}
+
+// CHECK IF REDISEARCH-INDEX EXISTS
+func CheckIfRedisSearchIndexExists(client *redisearch.Client) (bool, error) {
+	_, err := client.Info()
+
+	if err != nil {
+		if err.Error() == "Unknown Index name" {
+			return false, nil
+		}
+		return false, err
+	}
+	return true, nil
+}
+
+// CREATE A REDIS CONNECTION POOL
+func CreateRedisConnectionPool(redisHost, redisPassword string) (pool *redigo.Pool) {
+
+	pool = &redigo.Pool{
+		MaxIdle:   10,
+		MaxActive: 10,
+		Dial: func() (redigo.Conn, error) {
+			c, err := redigo.Dial("tcp", redisHost)
+			if err != nil {
+				return nil, err
+			}
+			if _, err := c.Do("AUTH", redisPassword); err != nil {
+				c.Close()
+				return nil, err
+			}
+			return c, nil
+		},
+	}
+
+	return
+
+}
+
+// CREATE REDISEARCH INDEX
+func CreateRedisSearchIndex(schema *redisearch.Schema, client *redisearch.Client, dropIfExistst bool) {
+
+	if err := client.CreateIndex(schema); err != nil {
+		log.Fatalf("Could not create index: %v", err)
+	}
+
+}
+
+// DROP REDISEARCH INDEX
+func DropRedisSearchIndex(client *redisearch.Client) {
+
+	client.Drop()
+
+}
+
+func SearchQuery(client *redisearch.Client, query *redisearch.Query) {
+
+	// SEARCH FOR DOCUMENTS
+	docs, total, err := client.Search(query)
+	if err != nil {
+		log.Fatalf("Could not search for documents: %v", err)
+	}
+
+	fmt.Printf("Found %d documents\n", total)
+	for _, doc := range docs {
+		fmt.Printf("Document: %v\n", doc)
+	}
 }

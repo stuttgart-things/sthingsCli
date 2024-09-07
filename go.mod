@@ -5,6 +5,7 @@ go 1.22.3
 require (
 	filippo.io/age v1.2.0
 	github.com/AlecAivazis/survey/v2 v2.3.7
+	github.com/RediSearch/redisearch-go v1.1.1
 	github.com/allegro/bigcache/v3 v3.1.0
 	github.com/atc0005/go-teams-notify/v2 v2.11.0-rc.1
 	github.com/getsops/sops/v3 v3.9.0
