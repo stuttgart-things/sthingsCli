@@ -230,7 +230,7 @@ func CreateRedisConnectionPool(redisHost, redisPassword string) (pool *redigo.Po
 }
 
 // CREATE REDISEARCH INDEX
-func CreateRedisSearchIndex(schema *redisearch.Schema, client *redisearch.Client, dropIfExistst bool) {
+func CreateRedisSearchIndex(client *redisearch.Client, schema *redisearch.Schema) {
 
 	if err := client.CreateIndex(schema); err != nil {
 		log.Fatalf("Could not create index: %v", err)
