@@ -263,10 +263,5 @@ func ExecuteRediSearchQuery(client *redisearch.Client, query *redisearch.Query) 
 		log.Fatalf("Could not search for documents: %v", err)
 	}
 
-	fmt.Printf("Found %d documents\n", total)
-	for _, doc := range docs {
-		fmt.Printf("Document: %v\n", doc)
-	}
-
 	return
 }
