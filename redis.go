@@ -254,10 +254,11 @@ func DropRedisSearchIndex(client *redisearch.Client) {
 
 }
 
-func SearchQuery(client *redisearch.Client, query *redisearch.Query) {
+// EXECUTE REDISEARCH QUERY
+func ExecuteRediSearchQuery(client *redisearch.Client, query *redisearch.Query) (docs []redisearch.Document, total int, err error) {
 
 	// SEARCH FOR DOCUMENTS
-	docs, total, err := client.Search(query)
+	docs, total, err = client.Search(query)
 	if err != nil {
 		log.Fatalf("Could not search for documents: %v", err)
 	}
@@ -266,4 +267,6 @@ func SearchQuery(client *redisearch.Client, query *redisearch.Query) {
 	for _, doc := range docs {
 		fmt.Printf("Document: %v\n", doc)
 	}
+
+	return
 }
