@@ -13,6 +13,7 @@ require (
 	github.com/go-git/go-git/v5 v5.12.0
 	github.com/gomodule/redigo v1.9.2
 	github.com/google/go-github/v62 v62.0.0
+	github.com/google/go-github/v64 v64.0.0
 	github.com/hashicorp/vault/api v1.14.0
 	github.com/jedib0t/go-pretty/v6 v6.5.9
 	github.com/minio/minio-go/v7 v7.0.74
