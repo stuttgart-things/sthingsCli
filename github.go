@@ -277,3 +277,10 @@ func GetFileContentFromGithubRepo(client *github.Client, userName, repoName, bra
 	return content, nil
 
 }
+
+func CreateGithubClient(token string) *github.Client {
+	if token == "" {
+		log.Fatal("UNAUTHORIZED: NO TOKEN PRESENT")
+	}
+	return github.NewClient(nil).WithAuthToken(token)
+}
