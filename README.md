@@ -11,6 +11,7 @@ providing golang building blocks for the use in command line interface modules
 ```go
 #import (
 #	"github.com/jedib0t/go-pretty/v6/table"
+# 	"sthingsCli "github.com/stuttgart-things/sthingsCli"
 #)
 
 tw := table.NewWriter()
@@ -23,6 +24,24 @@ tw.Render()
 ```
 
 </details>
+
+<details><summary>PRINT CUSTOM TABLE</summary>
+
+```go
+#import (
+#	"github.com/jedib0t/go-pretty/v6/table"
+#)
+
+tw1 := table.NewWriter()
+tw1.AppendHeader(table.Row{"SEVERITY", "SYSTEM", "TAGS", "ARTIFACTS"})
+tw1.AppendRow([]interface{}{message.Severity, message.System, message.Tags, message.Artifacts})
+tw1.SetOutputMirror(os.Stdout)
+tw1.SetStyle(table.StyleColoredBlackOnBlueWhite)
+tw1.Render()
+```
+
+</details>
+
 
 ### GIT
 
