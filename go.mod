@@ -15,7 +15,7 @@ require (
 	github.com/gomodule/redigo v1.9.2
 	github.com/google/go-github/v62 v62.0.0
 	github.com/google/go-github/v66 v66.0.0
-	github.com/hashicorp/vault/api v1.14.0
+	github.com/hashicorp/vault/api v1.15.0
 	github.com/jedib0t/go-pretty/v6 v6.6.0
 	github.com/minio/minio-go/v7 v7.0.74
 	github.com/nitishm/go-rejson/v4 v4.2.0
@@ -74,6 +74,7 @@ require (
 	github.com/aws/smithy-go v1.20.2 // indirect
 	github.com/blang/semver v3.5.1+incompatible // indirect
 	github.com/cenkalti/backoff/v3 v3.2.2 // indirect
+	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/cloudflare/circl v1.3.9 // indirect
 	github.com/coreos/go-semver v0.3.1 // indirect
