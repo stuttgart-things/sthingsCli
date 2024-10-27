@@ -4,6 +4,26 @@ providing golang building blocks for the use in command line interface modules
 
 ## MODULES
 
+### TABLES
+
+<details><summary>PRINT STRUCT OBJECT AS TABLE</summary>
+
+```go
+#import (
+#	"github.com/jedib0t/go-pretty/v6/table"
+#)
+
+tw := table.NewWriter()
+tw.AppendHeader(sthingsCli.CreateTableHeader(message))
+tw.AppendRow(sthingsCli.CreateTableRows(message))
+
+tw.SetOutputMirror(os.Stdout)
+tw.SetStyle(table.StyleColoredBright)
+tw.Render()
+```
+
+</details>
+
 ### GIT
 
 <details><summary>CLONE GIT REPOSITORY, GET FILE LIST + READ FILE</summary>
