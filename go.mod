@@ -16,7 +16,7 @@ require (
 	github.com/google/go-github/v66 v66.0.0
 	github.com/google/go-github/v66 v66.0.0
 	github.com/hashicorp/vault/api v1.15.0
-	github.com/jedib0t/go-pretty/v6 v6.6.0
+	github.com/jedib0t/go-pretty/v6 v6.6.1
 	github.com/minio/minio-go/v7 v7.0.74
 	github.com/nitishm/go-rejson/v4 v4.2.0
 	github.com/redis/go-redis/v9 v9.6.1
