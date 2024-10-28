@@ -6,6 +6,29 @@ providing golang building blocks for the use in command line interface modules
 
 ### TABLES
 
+<details><summary>PRINT MULTIPLE TABLES w/ FUNC</summary>
+
+```go
+#import (
+#	"github.com/jedib0t/go-pretty/v6/table"
+# 	"sthingsCli "github.com/stuttgart-things/sthingsCli"
+#)
+
+PrintTable(table.Row{"SEVERITY", "SYSTEM", "TAGS", "ARTIFACTS"}, table.Row{message.Severity, message.System, message.Tags, message.Artifacts}, table.StyleColoredBlackOnBlueWhite)
+
+func PrintTable(header, row table.Row, style table.Style) {
+
+	t := table.NewWriter()
+	t.SetOutputMirror(os.Stdout)
+	t.AppendHeader(header)
+	t.AppendRow(row)
+	t.SetStyle(style)
+	t.Render()
+}
+```
+
+</details>
+
 <details><summary>PRINT STRUCT OBJECT AS TABLE</summary>
 
 ```go
@@ -41,7 +64,6 @@ tw1.Render()
 ```
 
 </details>
-
 
 ### GIT
 
