@@ -5,7 +5,7 @@ go 1.22.3
 require (
 	filippo.io/age v1.2.0
 	github.com/AlecAivazis/survey/v2 v2.3.7
-	github.com/RediSearch/redisearch-go/v2 v2.1.1
+	github.com/RediSearch/redisearch-go v1.1.1
 	github.com/RediSearch/redisearch-go/v2 v2.1.1
 	github.com/allegro/bigcache/v3 v3.1.0
 	github.com/atc0005/go-teams-notify/v2 v2.13.0
@@ -13,8 +13,8 @@ require (
 	github.com/go-git/go-billy/v5 v5.6.0
 	github.com/go-git/go-git/v5 v5.12.0
 	github.com/gomodule/redigo v1.9.2
-	github.com/google/go-github/v66 v66.0.0
-	github.com/google/go-github/v66 v66.0.0
+	github.com/google/go-github/v62 v62.0.0
+	github.com/google/go-github/v68 v68.0.0
 	github.com/hashicorp/vault/api v1.15.0
 	github.com/jedib0t/go-pretty/v6 v6.6.1
 	github.com/minio/minio-go/v7 v7.0.80
@@ -25,7 +25,7 @@ require (
 	github.com/stretchr/testify v1.9.0
 	github.com/stuttgart-things/redisqueue v0.0.0-20230628084515-1d31f7874df7
 	github.com/stuttgart-things/sthingsBase v0.1.41
-	gopkg.in/yaml.v3 v3.0.1
+	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
 	sigs.k8s.io/yaml v1.4.0
 )
