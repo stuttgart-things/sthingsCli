@@ -5,16 +5,14 @@ go 1.22.3
 require (
 	filippo.io/age v1.2.1
 	github.com/AlecAivazis/survey/v2 v2.3.7
-	github.com/RediSearch/redisearch-go/v2 v2.1.1
-	github.com/RediSearch/redisearch-go/v2 v2.1.1
+	github.com/RediSearch/redisearch-go v1.1.1
 	github.com/allegro/bigcache/v3 v3.1.0
 	github.com/atc0005/go-teams-notify/v2 v2.13.0
 	github.com/getsops/sops/v3 v3.9.1
 	github.com/go-git/go-billy/v5 v5.6.1
 	github.com/go-git/go-git/v5 v5.12.0
 	github.com/gomodule/redigo v1.9.2
-	github.com/google/go-github/v68 v68.0.0
-	github.com/google/go-github/v68 v68.0.0
+	github.com/google/go-github/v62 v62.0.0
 	github.com/hashicorp/vault/api v1.15.0
 	github.com/jedib0t/go-pretty/v6 v6.6.1
 	github.com/minio/minio-go/v7 v7.0.82
@@ -25,7 +23,7 @@ require (
 	github.com/stretchr/testify v1.10.0
 	github.com/stuttgart-things/redisqueue v0.0.0-20230628084515-1d31f7874df7
 	github.com/stuttgart-things/sthingsBase v0.1.41
-	gopkg.in/yaml.v3 v3.0.1
+	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
 	sigs.k8s.io/yaml v1.4.0
 )
@@ -73,7 +71,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sts v1.31.3 // indirect
 	github.com/aws/smithy-go v1.21.0 // indirect
 	github.com/blang/semver v3.5.1+incompatible // indirect
-	github.com/cenkalti/backoff/v3 v3.2.2 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/cloudflare/circl v1.4.0 // indirect
@@ -119,7 +116,6 @@ require (
 	github.com/huandu/xstrings v1.3.3 // indirect
 	github.com/imdario/mergo v0.3.13 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
-	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
 	github.com/klauspost/compress v1.17.11 // indirect
