@@ -3,7 +3,7 @@ module github.com/stuttgart-things/sthingsCli
 go 1.22.3
 
 require (
-	filippo.io/age v1.2.0
+	filippo.io/age v1.2.1
 	github.com/AlecAivazis/survey/v2 v2.3.7
 	github.com/RediSearch/redisearch-go/v2 v2.1.1
 	github.com/RediSearch/redisearch-go/v2 v2.1.1
