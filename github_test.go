@@ -11,7 +11,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/google/go-github/v62/github"
+	"github.com/google/go-github/v68/github"
 
 	"github.com/stretchr/testify/assert"
 )
