@@ -13,7 +13,7 @@ require (
 	github.com/atc0005/go-teams-notify/v2 v2.13.0
 	github.com/getsops/sops/v3 v3.9.3
 	github.com/go-git/go-billy/v5 v5.6.1
-	github.com/go-git/go-git/v5 v5.12.0
+	github.com/go-git/go-git/v5 v5.13.1
 	github.com/gomodule/redigo v1.9.2
 	github.com/google/go-github/v62 v62.0.0
 	github.com/google/go-github/v68 v68.0.0
@@ -164,7 +164,7 @@ require (
 	github.com/sergi/go-diff v1.3.2-0.20230802210424-5b0b94c5c0d3 // indirect
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
-	github.com/skeema/knownhosts v1.2.2 // indirect
+	github.com/skeema/knownhosts v1.3.0 // indirect
 	github.com/snowzach/rotatefilehook v0.0.0-20220211133110-53752135082d // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/spf13/afero v1.11.0 // indirect
