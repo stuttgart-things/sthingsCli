@@ -22,7 +22,7 @@ require (
 	github.com/minio/minio-go/v7 v7.0.82
 	github.com/nitishm/go-rejson/v4 v4.2.0
 	github.com/redis/go-redis/v9 v9.7.0
-	github.com/schollz/progressbar/v3 v3.17.1
+	github.com/schollz/progressbar/v3 v3.18.0
 	github.com/spf13/viper v1.19.0
 	github.com/stretchr/testify v1.10.0
 	github.com/stuttgart-things/redisqueue v0.0.0-20230628084515-1d31f7874df7
@@ -195,8 +195,8 @@ require (
 	golang.org/x/net v0.33.0 // indirect
 	golang.org/x/oauth2 v0.24.0 // indirect
 	golang.org/x/sync v0.10.0 // indirect
-	golang.org/x/sys v0.28.0 // indirect
-	golang.org/x/term v0.27.0 // indirect
+	golang.org/x/sys v0.29.0 // indirect
+	golang.org/x/term v0.28.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
 	golang.org/x/time v0.8.0 // indirect
 	golang.org/x/tools v0.23.0 // indirect
