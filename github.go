@@ -14,7 +14,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/google/go-github/v62/github"
+	"github.com/google/go-github/v68/github"
 	sthingsBase "github.com/stuttgart-things/sthingsBase"
 )
 
@@ -193,6 +193,18 @@ func CreateRepository(client *github.Client, name, description, repoOwner string
 	}
 
 	return err, repo.GetName()
+}
+
+// SetPullRequestLabels CHANGES THE LABELS OF A PULL REQUEST
+func SetPullRequestLabels(client *github.Client, repoOwner, repoName string, prNumber int, labels []string) ([]*github.Label, error) {
+
+	updatedlabels, _, err := client.Issues.ReplaceLabelsForIssue(ctx, repoOwner, repoName, prNumber, labels)
+	if err != nil {
+		log.Fatalf("ERROR REPLACING LABELS: %v", err)
+	}
+
+	return updatedlabels, err
+
 }
 
 // CreateRepository CREATES A GITHUB REPOSITORY
