@@ -13,7 +13,7 @@ require (
 	github.com/go-git/go-git/v5 v5.13.1
 	github.com/gomodule/redigo v1.9.2
 	github.com/google/go-github/v68 v68.0.0
-	github.com/hashicorp/vault/api v1.15.0
+	github.com/hashicorp/vault/api v1.16.0
 	github.com/jedib0t/go-pretty/v6 v6.6.5
 	github.com/minio/minio-go/v7 v7.0.83
 	github.com/nitishm/go-rejson/v4 v4.2.0
@@ -183,10 +183,10 @@ require (
 	go.opentelemetry.io/otel/trace v1.33.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.9.0 // indirect
-	golang.org/x/crypto v0.31.0 // indirect
+	golang.org/x/crypto v0.32.0 // indirect
 	golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56 // indirect
 	golang.org/x/mod v0.19.0 // indirect
-	golang.org/x/net v0.33.0 // indirect
+	golang.org/x/net v0.34.0 // indirect
 	golang.org/x/oauth2 v0.24.0 // indirect
 	golang.org/x/sync v0.10.0 // indirect
 	golang.org/x/sys v0.29.0 // indirect
