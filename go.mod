@@ -17,7 +17,7 @@ require (
 	github.com/jedib0t/go-pretty/v6 v6.6.5
 	github.com/minio/minio-go/v7 v7.0.83
 	github.com/nitishm/go-rejson/v4 v4.2.0
-	github.com/redis/go-redis/v9 v9.7.0
+	github.com/redis/go-redis/v9 v9.13.0
 	github.com/schollz/progressbar/v3 v3.18.0
 	github.com/spf13/viper v1.19.0
 	github.com/stretchr/testify v1.10.0
