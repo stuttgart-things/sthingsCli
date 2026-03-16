@@ -11,7 +11,7 @@ require (
 	github.com/getsops/sops/v3 v3.9.3
 	github.com/go-git/go-billy/v5 v5.6.1
 	github.com/go-git/go-git/v5 v5.13.1
-	github.com/gomodule/redigo v1.9.2
+	github.com/gomodule/redigo/v2 v2.0.0
 	github.com/google/go-github/v68 v68.0.0
 	github.com/hashicorp/vault/api v1.15.0
 	github.com/jedib0t/go-pretty/v6 v6.6.5
