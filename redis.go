@@ -37,33 +37,31 @@ func GetRedisJSON(redisJSONHandler *rejson.Handler, jsonKey string) (jsonObject 
 
 }
 
-func SetRedisJSON(redisJSONHandler *rejson.Handler, jsonObject interface{}, jsonKey string) {
+func SetRedisJSON(redisJSONHandler *rejson.Handler, jsonObject interface{}, jsonKey string) error {
 
 	res, err := redisJSONHandler.JSONSet(jsonKey, ".", jsonObject)
 
 	if err != nil {
-		log.Fatalf("FAILED TO JSONSET")
-		return
+		return fmt.Errorf("failed to JSONSet key %s: %w", jsonKey, err)
 	}
 
 	if res.(string) == "OK" {
 		fmt.Printf("SUCCESS: %s\n", res)
 	} else {
-		fmt.Println("FAILED TO SET: ")
+		return fmt.Errorf("failed to set key %s: unexpected response %v", jsonKey, res)
 	}
 
+	return nil
 }
 
-func DeleteRedisSet(redisClient *redis.Client, setKey string) (isSetDeleted bool) {
+func DeleteRedisSet(redisClient *redis.Client, setKey string) (isSetDeleted bool, err error) {
 
-	err := redisClient.Del(context.TODO(), setKey).Err()
+	err = redisClient.Del(context.TODO(), setKey).Err()
 	if err != nil {
-		panic(err)
-	} else {
-		isSetDeleted = true
+		return false, fmt.Errorf("failed to delete redis set %s: %w", setKey, err)
 	}
 
-	return
+	return true, nil
 }
 
 func AddValueToRedisSet(redisClient *redis.Client, setKey, value string) (isSetValueunique bool) {
@@ -82,14 +80,14 @@ func GetValuesFromRedisSet(redisClient *redis.Client, setKey string) (values []s
 	return
 }
 
-func GetValueFromRedisByKey(redisClient *redis.Client, key string) (value string) {
+func GetValueFromRedisByKey(redisClient *redis.Client, key string) (value string, err error) {
 
-	value, err := redisClient.Get(ctx, key).Result()
+	value, err = redisClient.Get(ctx, key).Result()
 	if err != nil {
-		panic(err)
+		return "", fmt.Errorf("failed to get redis key %s: %w", key, err)
 	}
 
-	return
+	return value, nil
 }
 
 func GetRandomValueFromRedis(redisClient *redis.Client, ctx context.Context, key string) string {
@@ -126,7 +124,7 @@ func CreateRedisClient(connectionString, redisPassword string) (client *redis.Cl
 	return
 }
 
-func CheckRedisKV(connectionString, redisPassword, key, expectedValue string) (keyValueExists bool) {
+func CheckRedisKV(connectionString, redisPassword, key, expectedValue string) (keyValueExists bool, err error) {
 
 	rdb := CreateRedisClient(connectionString, redisPassword)
 
@@ -134,7 +132,7 @@ func CheckRedisKV(connectionString, redisPassword, key, expectedValue string) (k
 	fmt.Println("CHECKING IF KEY " + key + " EXISTS..")
 	keyExists, err := rdb.Exists(context.TODO(), key).Result()
 	if err != nil {
-		panic(err)
+		return false, fmt.Errorf("failed to check if key %s exists: %w", key, err)
 	}
 
 	// CHECK FOR VALUE/STATUS IN REDIS
@@ -144,7 +142,7 @@ func CheckRedisKV(connectionString, redisPassword, key, expectedValue string) (k
 
 		value, err := rdb.Get(context.TODO(), key).Result()
 		if err != nil {
-			panic(err)
+			return false, fmt.Errorf("failed to get value for key %s: %w", key, err)
 		}
 
 		if value == expectedValue {
@@ -159,10 +157,10 @@ func CheckRedisKV(connectionString, redisPassword, key, expectedValue string) (k
 		fmt.Println("KEY " + key + " DOES NOT EXIST)")
 	}
 
-	return
+	return keyValueExists, nil
 }
 
-func EnqueueDataInRedisStreams(connectionString, redisPassword, stream string, values map[string]interface{}) (enqueue bool) {
+func EnqueueDataInRedisStreams(connectionString, redisPassword, stream string, values map[string]interface{}) (enqueue bool, err error) {
 
 	producer, err := redisqueue.NewProducerWithOptions(&redisqueue.ProducerOptions{
 		MaxLen:               10000,
@@ -175,7 +173,7 @@ func EnqueueDataInRedisStreams(connectionString, redisPassword, stream string, v
 	})
 
 	if err != nil {
-		panic(err)
+		return false, fmt.Errorf("failed to create redis producer: %w", err)
 	}
 
 	redisStreamErr := producer.Enqueue(&redisqueue.Message{
@@ -184,13 +182,10 @@ func EnqueueDataInRedisStreams(connectionString, redisPassword, stream string, v
 	})
 
 	if redisStreamErr != nil {
-		panic(redisStreamErr)
-
-	} else {
-		enqueue = true
+		return false, fmt.Errorf("failed to enqueue message to stream %s: %w", stream, redisStreamErr)
 	}
 
-	return
+	return true, nil
 }
 
 // CHECK IF REDISEARCH-INDEX EXISTS
