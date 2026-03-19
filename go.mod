@@ -1,6 +1,6 @@
 module github.com/stuttgart-things/sthingsCli
 
-go 1.24.0
+go 1.25.0
 
 require (
 	filippo.io/age v1.3.1
@@ -13,6 +13,7 @@ require (
 	github.com/go-git/go-git/v5 v5.13.1
 	github.com/gomodule/redigo v1.9.3
 	github.com/google/go-github/v68 v68.0.0
+	github.com/google/go-github/v84 v84.0.0
 	github.com/hashicorp/vault/api v1.15.0
 	github.com/jedib0t/go-pretty/v6 v6.6.5
 	github.com/minio/minio-go/v7 v7.0.83
@@ -106,8 +107,8 @@ require (
 	github.com/golang-jwt/jwt/v4 v4.4.2 // indirect
 	github.com/golang-jwt/jwt/v5 v5.2.1 // indirect
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
-	github.com/google/go-cmp v0.6.0 // indirect
-	github.com/google/go-querystring v1.1.0 // indirect
+	github.com/google/go-cmp v0.7.0 // indirect
+	github.com/google/go-querystring v1.2.0 // indirect
 	github.com/google/s2a-go v0.1.8 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.4 // indirect
